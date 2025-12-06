@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Homepreneur Hub - Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    :root {
+      --bg: #f8f5f2;
+      --card-bg: #fffefa;
+      --primary: #835b36;
+      --accent: #e2b07d;
+      --shadow: 0 6px 32px rgba(89,48,14,0.08);
+      --input-bg: #f4eee9;
+      --input-border: #deb887;
+      --input-focus: #ac7f57;
+      --text: #5d3a20;
+      --subtle: #ac9076;
+      --link: #a87037;
+      --btn-hover: #a9825a;
+      --btn-gradient: linear-gradient(90deg, #d1ad8f 0%, #e0c1a5 100%);
+    }
+    body {
+      background: var(--bg);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Segoe UI", "Arial", sans-serif;
+      color: var(--text);
+      margin: 0;
+    }
+    .login-container {
+      background: var(--card-bg);
+      box-shadow: var(--shadow);
+      border-radius: 20px;
+      padding: 2.5rem 2rem 2rem 2rem;
+      min-width: 325px;
+      max-width: 370px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      align-items: center;
+      animation: fadein 0.8s cubic-bezier(.65,0,.35,1);
+    }
+    @keyframes fadein {
+      from {opacity: 0; transform: translateY(30px);}
+      to {opacity: 1; transform: none;}
+    }
+    .login-title {
+      font-size: 1.7rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      color: var(--primary);
+      margin-bottom: 0.2em;
+      text-align: center;
+    }
+    form {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+    .form-group {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+    label {
+      font-size: 1rem;
+      color: var(--subtle);
+      letter-spacing: 0.2px;
+      margin-bottom: 2px;
+    }
+    input:not([type="checkbox"]) {
+      background: var(--input-bg);
+      border: 1.2px solid var(--input-border);
+      outline: none;
+      border-radius: 8px;
+      color: var(--text);
+      font-size: 1rem;
+      padding: 0.7rem 1rem;
+      transition: border 0.18s, box-shadow 0.18s;
+      box-shadow: 0 2px 8px rgba(201,163,120,0.04);
+    }
+    input:not([type="checkbox"]):focus {
+      border-color: var(--input-focus);
+      box-shadow: 0 0 0 2.5px #e7d4c7;
+    }
+    .form-meta-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: -0.4rem;
+    }
+    .remember-me {
+      display: flex;
+      align-items: center;
+      gap: 0.35em;
+      color: var(--subtle);
+      font-size: 0.96rem;
+      cursor: pointer;
+      user-select: none;
+    }
+    .remember-me input[type="checkbox"] {
+      accent-color: var(--accent);
+    }
+    .forgot-link {
+      color: var(--link);
+      font-size: 0.96rem;
+      text-decoration: none;
+      transition: color 0.17s;
+    }
+    .forgot-link:hover {
+      text-decoration: underline;
+      color: var(--primary);
+    }
+    .btn-row {
+      display: flex;
+      gap: 1.2rem;
+      margin-top: 0.4rem;
+      width: 100%;
+      justify-content: center;
+    }
+    .btn {
+      font-family: inherit;
+      appearance: none;
+      background: var(--btn-gradient);
+      color: var(--primary);
+      border: none;
+      border-radius: 7px;
+      font-size: 1.08rem;
+      padding: 0.72em 1.56em;
+      cursor: pointer;
+      box-shadow: 0 2px 10px rgba(181,123,62,0.05);
+      font-weight: 520;
+      letter-spacing: 0.6px;
+      transition: background 0.2s, box-shadow 0.18s, color 0.14s;
+      position: relative;
+      z-index: 1;
+      outline: none;
+    }
+    .btn:hover, .btn:focus {
+      background: var(--btn-hover);
+      color: #fff;
+      box-shadow: 0 4px 18px rgba(181,123,62,0.12);
+    }
+    .toast {
+      pointer-events: none;
+      position: fixed;
+      z-index: 1234;
+      left: 50%;
+      bottom: 2.1rem;
+      padding: 0.78em 2.1em;
+      background: var(--primary);
+      color: #fff6f0;
+      font-size: 1.04rem;
+      border-radius: 99px;
+      min-width: 160px;
+      text-align: center;
+      transform: translate(-50%, 60px);
+      opacity: 0;
+      transition: opacity 0.27s, transform 0.26s;
+      box-shadow: 0 6px 32px rgba(93,58,32,0.12);
+      font-weight: 500;
+    }
+    .toast.show {
+      opacity: 1;
+      transform: translate(-50%, 0);
+      pointer-events: all;
+    }
+    .preview-popup-overlay {
+      position: fixed;
+      background: rgba(80,38,9,0.14);
+      top: 0; bottom: 0; left: 0; right: 0;
+      z-index: 25;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: fadein 0.31s;
+    }
+    .preview-popup {
+      background: var(--card-bg);
+      border-radius: 18px;
+      box-shadow: 0 8px 48px rgba(89,48,14,0.16);
+      min-width: 260px;
+      padding: 2.1rem 2rem 2rem 2rem;
+      animation: popup-scale 0.32s cubic-bezier(.85,0,.15,1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      gap: 1.2rem;
+    }
+    @keyframes popup-scale {
+      from { transform: scale(0.94); opacity: 0; }
+      to   { transform: none; opacity: 1; }
+    }
+    .preview-title {
+      font-size: 1.25rem;
+      color: var(--primary);
+      font-weight: 600;
+      margin-bottom: 0.3em;
+      text-align: center;
+    }
+    .preview-list {
+      width: 100%;
+      margin: 0 0 1.1em 0;
+      padding: 0;
+      list-style: none;
+      color: var(--text);
+    }
+    .preview-list li {
+      font-size: 1.04rem;
+      margin-bottom: 0.2em;
+      padding-left: 0.1em;
+    }
+    .close-popup {
+      position: absolute;
+      top: 8px; right: 10px;
+      background: none;
+      border: none;
+      font-size: 1.35em;
+      color: var(--subtle);
+      cursor: pointer;
+      border-radius: 50%;
+      line-height: 1;
+      width: 2em; height: 2em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.14s;
+    }
+    .close-popup:hover {
+      background: #ecd3bd41;
+    }
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    input[type="number"] {
+      -moz-appearance: textfield;
+    }
+    @media (max-width: 480px) {
+      .login-container {
+        min-width: 92vw;
+        padding: 1.5rem 0.7rem 1.6rem;
+      }
+      .preview-popup {
+        min-width: 87vw;
+        padding: 1.2rem 0.7rem 1.1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <div class="login-title">Homepreneur Hub</div>
+    <form id="loginForm" autocomplete="off">
+      <div class="form-group">
+        <label for="email">Email address</label>
+        <input id="email" type="email" name="email" required placeholder="you@example.com" autocomplete="off">
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input id="password" type="password" name="password" required placeholder="••••••••">
+      </div>
+      <div class="form-meta-row">
+        <label class="remember-me">
+          <input type="checkbox" id="rememberMe" name="remember"> Remember me
+        </label>
+        <a class="forgot-link" href="#" tabindex="0" onclick="event.preventDefault(); showToast('Password help is coming soon!')">Forgot?</a>
+      </div>
+      <div class="btn-row">
+        <button type="submit" class="btn" id="loginBtn">Log in</button>
+      </div>
+    </form>
+  </div>
+
+  <div id="toast" class="toast"></div>
+  <div id="previewPopup" style="display:none;"></div>
+
+  <script>
+    function showToast(msg, duration=1800) {
+      const toast = document.getElementById('toast');
+      toast.innerText = msg;
+      toast.className = 'toast show';
+      clearTimeout(toast.timer);
+      toast.timer = setTimeout(()=>toast.className='toast', duration);
+    }
+
+    document.getElementById('loginBtn').addEventListener('mousedown', function(e){
+      this.style.transform = 'scale(0.97)';
+    });
+    document.getElementById('loginBtn').addEventListener('mouseup', function(e){
+      this.style.transform = '';
+    });
+    document.getElementById('loginBtn').addEventListener('mouseleave', function(e){
+      this.style.transform = '';
+    });
+
+    function showPreview({email, name}) {
+      const popupHtml = `
+        <div class="preview-popup-overlay" tabindex="0">
+          <div class="preview-popup" role="dialog" aria-modal="true">
+            <button class="close-popup" title="Close" onclick="hidePreviewPopup()" aria-label="Close popup">&times;</button>
+            <div class="preview-title">Welcome!</div>
+            <ul class="preview-list">
+              <li><b>Email:</b> ${email || 'Not entered'}</li>
+              <li><b>Name:</b> ${name || 'Anonymous'}</li>
+            </ul>
+            <button class="btn" style="margin-top:0.5em" onclick="hidePreviewPopup()">Okay</button>
+          </div>
+        </div>
+      `;
+      const popup = document.getElementById('previewPopup');
+      popup.innerHTML = popupHtml;
+      popup.style.display = '';
+      document.body.style.overflow = 'hidden';
+      setTimeout(() => {
+        document.querySelector('.preview-popup-overlay').focus();
+      }, 10);
+    }
+    function hidePreviewPopup() {
+      document.getElementById('previewPopup').style.display = "none";
+      document.body.style.overflow = '';
+    }
+    document.addEventListener('keydown', function(e){
+      if(e.key === "Escape") hidePreviewPopup();
+    });
+
+    function getNameFromEmail(email) {
+      if (!email) return '';
+      let name = email.split('@')[0].replace(/[._]/g," ");
+      return name.replace(/\b\w/g, l=>l.toUpperCase());
+    }
+
+    document.getElementById('loginForm').addEventListener('submit', function(e){
+      e.preventDefault();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      const name = getNameFromEmail(email);
+
+      if (!email || !password) {
+        showToast('Please fill all fields');
+        return;
+      }
+      showToast('Logging in…');
+      setTimeout(()=>{
+        showPreview({email, name});
+      }, 700);
+    });
+
+    document.addEventListener('click', function(e){
+      if(e.target.classList.contains('preview-popup-overlay')){
+        hidePreviewPopup();
+      }
+    });
+  </script>
+</body>
+</html>
