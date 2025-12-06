@@ -1,0 +1,3232 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Homepreneur Hub - Empowering Women Entrepreneurs</title>
+  <script src="/_sdk/data_sdk.js"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <style>
+        :root {
+            --bg: #f8f5f2;
+            --card-bg: #fffefa;
+            --primary: #835b36;
+            --accent: #e2b07d;
+            --shadow: 0 6px 32px rgba(89,48,14,0.08);
+            --input-bg: #f4eee9;
+            --input-border: #deb887;
+            --input-focus: #ac7f57;
+            --text: #5d3a20;
+            --subtle: #ac9076;
+            --link: #a87037;
+            --btn-hover: #a9825a;
+            --btn-gradient: linear-gradient(90deg, #d1ad8f 0%, #e0c1a5 100%);
+            --gradient-bg: linear-gradient(135deg, #d4a574 0%, #c49a6c 50%, #b88a5e 100%);
+            --success: #7a9b5f;
+            --error: #b85d50;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Segoe UI", "Arial", sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        /* Header & Navigation */
+        header {
+            background: var(--card-bg);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            transition: background 0.3s;
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-btn {
+            background: none;
+            border: none;
+            color: var(--subtle);
+            font-size: 1rem;
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .nav-btn:hover {
+            color: var(--primary);
+            background: var(--input-bg);
+        }
+
+        .nav-btn.active {
+            color: var(--primary);
+            background: var(--input-bg);
+        }
+
+        .profile-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .profile-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--btn-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.2rem;
+            color: var(--primary);
+            border: 2px solid var(--accent);
+            transition: transform 0.3s;
+            position: relative;
+        }
+
+        .profile-icon:hover {
+            transform: scale(1.1);
+        }
+
+        .profile-dropdown {
+            position: absolute;
+            top: 60px;
+            right: 2rem;
+            background: var(--card-bg);
+            box-shadow: var(--shadow);
+            border-radius: 12px;
+            padding: 1rem;
+            min-width: 200px;
+            display: none;
+            animation: dropdown-appear 0.3s;
+        }
+
+        .profile-dropdown.show {
+            display: block;
+        }
+
+        @keyframes dropdown-appear {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .profile-info {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--input-border);
+            margin-bottom: 0.5rem;
+        }
+
+        .profile-name {
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 0.2rem;
+        }
+
+        .profile-email {
+            font-size: 0.85rem;
+            color: var(--subtle);
+        }
+
+        .profile-menu-item {
+            padding: 0.7rem;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: background 0.2s;
+            font-size: 0.95rem;
+        }
+
+        .profile-menu-item:hover {
+            background: var(--input-bg);
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #d4a574 0%, #c49a6c 100%);
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            padding: 0.7rem 1.5rem;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 15px rgba(212, 165, 116, 0.3), 0 2px 8px rgba(131, 91, 54, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #e2b07d 0%, #d4a574 100%);
+            transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: -1;
+        }
+
+        .btn:hover::before {
+            left: 0;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(212, 165, 116, 0.4), 0 4px 12px rgba(131, 91, 54, 0.3);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 10px rgba(212, 165, 116, 0.3);
+        }
+
+        .btn-small {
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            box-shadow: 0 4px 15px rgba(131, 91, 54, 0.15);
+        }
+
+        .btn-outline::before {
+            background: var(--primary);
+        }
+
+        .btn-outline:hover {
+            color: #fff;
+            border-color: var(--primary);
+        }
+
+        /* Section Styles */
+        .section {
+            min-height: calc(100% - 80px);
+            padding: 3rem 2rem;
+        }
+
+        .section-hidden {
+            display: none;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Hero Section - New Creative Design */
+        .hero-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+            min-height: 500px;
+        }
+
+        .hero-left {
+            background: var(--gradient-bg);
+            color: #fff;
+            padding: 3rem;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+
+        .hero-left h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .hero-left p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .hero-right {
+            display: grid;
+            grid-template-rows: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .benefit-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            transition: transform 0.3s;
+        }
+
+        .benefit-card:hover {
+            transform: translateX(10px);
+        }
+
+        .benefit-icon {
+            font-size: 3rem;
+            flex-shrink: 0;
+        }
+
+        .benefit-content h3 {
+            color: var(--primary);
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .benefit-content p {
+            color: var(--subtle);
+            font-size: 0.95rem;
+        }
+
+        /* Card Styles */
+        .card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 6px 20px rgba(131, 91, 54, 0.1), 0 2px 8px rgba(89, 48, 14, 0.08);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(212, 165, 116, 0.05) 0%, rgba(196, 154, 108, 0.05) 100%);
+            transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 0;
+        }
+
+        .card:hover::before {
+            left: 0;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(212, 165, 116, 0.2), 0 8px 20px rgba(131, 91, 54, 0.15);
+        }
+
+        .card > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .card-content {
+            color: var(--text);
+            line-height: 1.7;
+        }
+
+        /* Grid Layouts */
+        .grid {
+            display: grid;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .grid-2 {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+
+        .grid-3 {
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        }
+
+        .grid-4 {
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        }
+
+        /* Service Categories */
+        .category-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 2px solid transparent;
+            box-shadow: 0 6px 20px rgba(131, 91, 54, 0.1), 0 2px 8px rgba(89, 48, 14, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .category-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(212, 165, 116, 0.1) 0%, rgba(196, 154, 108, 0.1) 100%);
+            transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 0;
+        }
+
+        .category-card:hover::before {
+            left: 0;
+        }
+
+        .category-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(212, 165, 116, 0.25), 0 8px 20px rgba(131, 91, 54, 0.15);
+        }
+
+        .category-card > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .category-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .category-title {
+            font-size: 1.3rem;
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .category-desc {
+            color: var(--subtle);
+            font-size: 0.95rem;
+        }
+
+        /* Dashboard Stats */
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .stat-box {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--subtle);
+            font-size: 0.9rem;
+        }
+
+        /* Portfolio Grid */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .portfolio-item {
+            aspect-ratio: 1;
+            background: var(--input-bg);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            cursor: pointer;
+            transition: transform 0.3s;
+            border: 2px dashed var(--input-border);
+        }
+
+        .portfolio-item:hover {
+            transform: scale(1.05);
+        }
+
+        .portfolio-item.add {
+            border-style: dashed;
+            color: var(--subtle);
+        }
+
+        /* Order Card */
+        .order-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: var(--shadow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .order-info h4 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .order-meta {
+            color: var(--subtle);
+            font-size: 0.9rem;
+        }
+
+        .order-status {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .status-pending {
+            background: #fff4e6;
+            color: #d97706;
+        }
+
+        .status-completed {
+            background: #ecfdf5;
+            color: #059669;
+        }
+
+        .status-cancelled {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        /* Auth Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(80,38,9,0.3);
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            animation: fadein 0.3s;
+            overflow-y: auto;
+            padding: 2rem 0;
+        }
+
+        @keyframes fadein {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .modal {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2.5rem 2rem;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 8px 48px rgba(89,48,14,0.2);
+            animation: modal-appear 0.3s cubic-bezier(.65,0,.35,1);
+            position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
+            margin: auto;
+        }
+
+        @keyframes modal-appear {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--subtle);
+            cursor: pointer;
+            width: 2rem;
+            height: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background 0.2s;
+        }
+
+        .modal-close:hover {
+            background: var(--input-bg);
+        }
+
+        .modal-title {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .form-group label {
+            display: block;
+            color: var(--subtle);
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1.5px solid var(--input-border);
+            border-radius: 8px;
+            background: var(--input-bg);
+            color: var(--text);
+            font-size: 1rem;
+            transition: all 0.3s;
+            outline: none;
+            font-family: inherit;
+        }
+
+        .form-group textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            border-color: var(--input-focus);
+            box-shadow: 0 0 0 3px rgba(172, 127, 87, 0.1);
+        }
+
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.8rem;
+            margin-top: 0.5rem;
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+
+        .checkbox-label:hover {
+            background: var(--input-bg);
+        }
+
+        .checkbox-label input[type="checkbox"] {
+            width: auto;
+            cursor: pointer;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        .radio-label {
+            flex: 1;
+            cursor: pointer;
+        }
+
+        .radio-label input[type="radio"] {
+            margin-right: 0.5rem;
+        }
+
+        .form-actions {
+            margin-top: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .form-footer {
+            text-align: center;
+            margin-top: 1rem;
+            color: var(--subtle);
+            font-size: 0.95rem;
+        }
+
+        .form-footer a {
+            color: var(--link);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .form-footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--primary);
+            color: #fff;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            box-shadow: 0 6px 32px rgba(93,58,32,0.2);
+            font-weight: 500;
+            opacity: 0;
+            transition: all 0.3s;
+            z-index: 2000;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .toast.success {
+            background: var(--success);
+        }
+
+        .toast.error {
+            background: var(--error);
+        }
+
+        /* Stats Section */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 2rem;
+            background: var(--card-bg);
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--subtle);
+            font-size: 1rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary);
+            color: #fff;
+            padding: 3rem 2rem 1.5rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h4 {
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: #fff;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* AI Chatbot */
+        .chatbot-menu {
+            position: fixed;
+            bottom: 5rem;
+            right: 2rem;
+            background: var(--card-bg);
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(89,48,14,0.2);
+            display: none;
+            z-index: 1000;
+            animation: menu-appear 0.3s cubic-bezier(.65,0,.35,1);
+            min-width: 280px;
+        }
+
+        .chatbot-menu.show {
+            display: block;
+        }
+
+        @keyframes menu-appear {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .chatbot-menu-item {
+            padding: 1.2rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            cursor: pointer;
+            transition: background 0.2s;
+            border-bottom: 1px solid var(--input-border);
+        }
+
+        .chatbot-menu-item:first-child {
+            border-radius: 16px 16px 0 0;
+        }
+
+        .chatbot-menu-item:last-child {
+            border-bottom: none;
+            border-radius: 0 0 16px 16px;
+        }
+
+        .chatbot-menu-item:hover {
+            background: var(--input-bg);
+        }
+
+        .chatbot-menu-icon {
+            font-size: 1.8rem;
+            width: 2.5rem;
+            height: 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--accent);
+            border-radius: 50%;
+        }
+
+        .chatbot-menu-content {
+            flex: 1;
+        }
+
+        .chatbot-menu-title {
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 0.2rem;
+            font-size: 1.05rem;
+        }
+
+        .chatbot-menu-desc {
+            font-size: 0.85rem;
+            color: var(--subtle);
+        }
+
+        .chatbot-container {
+            position: fixed;
+            bottom: 0;
+            right: 2rem;
+            width: 400px;
+            height: 600px;
+            background: var(--card-bg);
+            border-radius: 20px 20px 0 0;
+            box-shadow: 0 -4px 32px rgba(89,48,14,0.2);
+            display: none;
+            flex-direction: column;
+            z-index: 1000;
+            animation: chatbot-appear 0.3s cubic-bezier(.65,0,.35,1);
+        }
+
+        .chatbot-container.show {
+            display: flex;
+        }
+
+        @keyframes chatbot-appear {
+            from {
+                opacity: 0;
+                transform: translateY(100%);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .chatbot-header {
+            background: var(--gradient-bg);
+            color: #fff;
+            padding: 1.5rem;
+            border-radius: 20px 20px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chatbot-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .chatbot-close-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: #fff;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: background 0.2s;
+        }
+
+        .chatbot-close-btn:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .chatbot-messages {
+            flex: 1;
+            padding: 1.5rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            background: var(--bg);
+        }
+
+        .chat-message {
+            display: flex;
+            gap: 0.5rem;
+            animation: message-appear 0.3s;
+        }
+
+        @keyframes message-appear {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .chat-message.user {
+            flex-direction: row-reverse;
+        }
+
+        .message-avatar {
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .message-avatar.bot {
+            background: var(--accent);
+        }
+
+        .message-avatar.user {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        .message-bubble {
+            max-width: 75%;
+            padding: 0.8rem 1rem;
+            border-radius: 12px;
+            line-height: 1.5;
+        }
+
+        .chat-message.bot .message-bubble {
+            background: var(--card-bg);
+            color: var(--text);
+            border: 1px solid var(--input-border);
+        }
+
+        .chat-message.user .message-bubble {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        .chatbot-input-area {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid var(--input-border);
+            display: flex;
+            gap: 0.5rem;
+            background: var(--card-bg);
+        }
+
+        .chatbot-input {
+            flex: 1;
+            padding: 0.8rem 1rem;
+            border: 1.5px solid var(--input-border);
+            border-radius: 20px;
+            background: var(--input-bg);
+            color: var(--text);
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .chatbot-input:focus {
+            border-color: var(--input-focus);
+        }
+
+        .chatbot-send-btn {
+            background: var(--btn-gradient);
+            color: var(--primary);
+            border: none;
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+        }
+
+        .chatbot-send-btn:hover {
+            background: var(--btn-hover);
+            color: #fff;
+        }
+
+        .chatbot-send-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .typing-indicator {
+            display: flex;
+            gap: 0.3rem;
+            padding: 0.8rem 1rem;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--subtle);
+            animation: typing 1.4s infinite;
+        }
+
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typing {
+            0%, 60%, 100% {
+                transform: translateY(0);
+            }
+            30% {
+                transform: translateY(-10px);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-split {
+                grid-template-columns: 1fr;
+            }
+
+            .chatbot-container {
+                right: 1rem;
+                left: 1rem;
+                width: auto;
+            }
+
+            .nav-links {
+                gap: 0.5rem;
+            }
+
+            .nav-btn {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.9rem;
+            }
+
+            .profile-dropdown {
+                right: 1rem;
+            }
+
+            .checkbox-group {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+ </head>
+ <body><!-- Header -->
+  <header>
+   <nav>
+    <div style="display: flex; align-items: center; gap: 2rem;">
+     <div class="logo">
+      <svg width="32" height="32" viewbox="0 0 32 32" style="margin-right: 0.5rem;"><circle cx="16" cy="16" r="14" fill="var(--accent)" opacity="0.3" /> <path d="M16 6 L24 14 L22 14 L22 24 L18 24 L18 18 L14 18 L14 24 L10 24 L10 14 L8 14 Z" fill="var(--primary)" /> <circle cx="16" cy="10" r="3" fill="var(--primary)" /> <path d="M13 11 Q16 13 19 11" stroke="var(--primary)" stroke-width="1.5" fill="none" />
+      </svg>
+      <div>
+       <div style="font-size: 1.5rem; line-height: 1;">
+        Homepreneur Hub
+       </div>
+       <div style="font-size: 0.65rem; color: var(--subtle); font-weight: 400; letter-spacing: 1px;">
+        EMPOWERING WOMEN
+       </div>
+      </div>
+     </div>
+    </div>
+    <div class="nav-links"><button class="nav-btn active" onclick="showSection('home')">Home</button> <button class="nav-btn" onclick="showSection('services')">Services</button> <button class="nav-btn" onclick="showSection('community')">Community</button>
+    </div>
+    <div class="profile-section"><button class="profile-icon" onclick="openChatbot()" title="Chat with AI Assistant" style="display: flex;"> 🤖 </button>
+     <div id="authButtons" class="auth-buttons"><button class="btn btn-outline btn-small" onclick="showLoginModal()">Login</button> <button class="btn btn-small" onclick="showRegisterModal()">Sign Up</button>
+     </div>
+     <div id="profileIcon" class="profile-icon" style="display: none;" onclick="toggleProfileDropdown()">
+      👤
+     </div>
+    </div>
+   </nav>
+   <div id="profileDropdown" class="profile-dropdown">
+    <div class="profile-info">
+     <div class="profile-name" id="profileName">
+      User Name
+     </div>
+     <div class="profile-email" id="profileEmail">
+      user@example.com
+     </div>
+    </div>
+    <div class="profile-menu-item" onclick="showSection('profile')">
+     My Dashboard
+    </div>
+    <div class="profile-menu-item" onclick="logout()">
+     Logout
+    </div>
+   </div>
+  </header><!-- Home Section -->
+  <section id="home" class="section">
+   <div class="container"><!-- New Creative Hero Section -->
+    <div class="hero-split">
+     <div class="hero-left">
+      <h1>Your Home. Your Hustle. Your Success.</h1>
+      <p>Transform your passion into profit. Join thousands of women building businesses from home.</p><button class="btn" onclick="showRegisterModal()" style="font-size: 1.1rem; padding: 1rem 2.5rem;">Start Your Journey</button>
+     </div>
+     <div class="hero-right">
+      <div class="benefit-card">
+       <div class="benefit-icon">
+        🏡
+       </div>
+       <div class="benefit-content">
+        <h3>Work from Home</h3>
+        <p>Balance family and business seamlessly</p>
+       </div>
+      </div>
+      <div class="benefit-card">
+       <div class="benefit-icon">
+        💰
+       </div>
+       <div class="benefit-content">
+        <h3>Financial Freedom</h3>
+        <p>Earn on your own terms, no limits</p>
+       </div>
+      </div>
+      <div class="benefit-card">
+       <div class="benefit-icon">
+        🤝
+       </div>
+       <div class="benefit-content">
+        <h3>Supportive Community</h3>
+        <p>Connect with 2,500+ women like you</p>
+       </div>
+      </div>
+     </div>
+    </div>
+    <h2 style="text-align: center; color: var(--primary); margin-bottom: 2rem; font-size: 2rem;">Featured Categories</h2>
+    <div class="grid grid-4">
+     <div class="category-card" onclick="showCategoryDetail('food')">
+      <div class="category-icon">
+       🍲
+      </div>
+      <div class="category-title">
+       Food Services
+      </div>
+      <div class="category-desc">
+       Homemade tiffins, catering, baked goods
+      </div>
+     </div>
+     <div class="category-card" onclick="showCategoryDetail('beauty')">
+      <div class="category-icon">
+       💄
+      </div>
+      <div class="category-title">
+       Beauty &amp; Wellness
+      </div>
+      <div class="category-desc">
+       Makeup, skincare, spa services
+      </div>
+     </div>
+     <div class="category-card" onclick="showCategoryDetail('tailoring')">
+      <div class="category-icon">
+       ✂️
+      </div>
+      <div class="category-title">
+       Tailoring
+      </div>
+      <div class="category-desc">
+       Custom stitching, alterations, embroidery
+      </div>
+     </div>
+     <div class="category-card" onclick="showCategoryDetail('education')">
+      <div class="category-icon">
+       📚
+      </div>
+      <div class="category-title">
+       Tutoring
+      </div>
+      <div class="category-desc">
+       Academic coaching, music, art classes
+      </div>
+     </div>
+     <div class="category-card" onclick="showCategoryDetail('crafts')">
+      <div class="category-icon">
+       🎨
+      </div>
+      <div class="category-title">
+       Crafts &amp; Art
+      </div>
+      <div class="category-desc">
+       Handmade gifts, decorations, jewelry
+      </div>
+     </div>
+    </div><!-- Success Stories Preview -->
+    <div style="margin: 4rem 0; background: var(--card-bg); padding: 3rem 2rem; border-radius: 20px; box-shadow: var(--shadow);">
+     <h2 style="text-align: center; color: var(--primary); margin-bottom: 1rem; font-size: 2rem;">Real Stories, Real Success</h2>
+     <p style="text-align: center; color: var(--subtle); margin-bottom: 3rem; font-size: 1.1rem;">Meet women who transformed their passion into profit</p>
+     <div class="grid grid-3">
+      <div style="text-align: center; padding: 1.5rem;">
+       <div style="font-size: 3rem; margin-bottom: 1rem;">
+        👩‍🍳
+       </div>
+       <p style="color: var(--text); font-style: italic; margin-bottom: 1rem;">"Started with 5 tiffins a day, now serving 50+ families. My kitchen became my business!"</p><strong style="color: var(--primary);">— Priya, Mumbai</strong>
+       <div style="color: var(--accent); margin-top: 0.5rem;">
+        ₹40,000/month
+       </div>
+      </div>
+      <div style="text-align: center; padding: 1.5rem;">
+       <div style="font-size: 3rem; margin-bottom: 1rem;">
+        💄
+       </div>
+       <p style="color: var(--text); font-style: italic; margin-bottom: 1rem;">"From hobby to career – I'm now fully booked every weekend for bridal makeup!"</p><strong style="color: var(--primary);">— Anjali, Bangalore</strong>
+       <div style="color: var(--accent); margin-top: 0.5rem;">
+        ₹60,000/month
+       </div>
+      </div>
+      <div style="text-align: center; padding: 1.5rem;">
+       <div style="font-size: 3rem; margin-bottom: 1rem;">
+        ✂️
+       </div>
+       <p style="color: var(--text); font-style: italic; margin-bottom: 1rem;">"My sewing machine and I are unstoppable. Financial independence feels amazing!"</p><strong style="color: var(--primary);">— Meera, Pune</strong>
+       <div style="color: var(--accent); margin-top: 0.5rem;">
+        ₹35,000/month
+       </div>
+      </div>
+     </div>
+    </div><!-- Stats -->
+    <div style="margin-top: 4rem;">
+     <h2 style="text-align: center; color: var(--primary); margin-bottom: 2rem; font-size: 2rem;">Growing Stronger Together</h2>
+     <div class="stats-grid">
+      <div class="stat-card">
+       <div class="stat-number">
+        2,500+
+       </div>
+       <div class="stat-label">
+        Women Building Businesses
+       </div>
+      </div>
+      <div class="stat-card">
+       <div class="stat-number">
+        ₹2Cr+
+       </div>
+       <div class="stat-label">
+        Collective Monthly Revenue
+       </div>
+      </div>
+      <div class="stat-card">
+       <div class="stat-number">
+        25,000+
+       </div>
+       <div class="stat-label">
+        Happy Customers Served
+       </div>
+      </div>
+      <div class="stat-card">
+       <div class="stat-number">
+        150+
+       </div>
+       <div class="stat-label">
+        Cities Connected
+       </div>
+      </div>
+     </div>
+    </div><!-- CTA Section -->
+    <div style="margin-top: 4rem; background: var(--gradient-bg); padding: 3rem 2rem; border-radius: 20px; text-align: center; color: #fff;">
+     <h2 style="font-size: 2rem; margin-bottom: 1rem;">Ready to Turn Your Skills Into Income?</h2>
+     <p style="font-size: 1.2rem; margin-bottom: 2rem; opacity: 0.95;">Join thousands of women who are living life on their own terms</p>
+     <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;"><button class="btn" onclick="showRegisterModal()" style="background: #fff; color: var(--primary); font-size: 1.1rem; padding: 1rem 2.5rem;"> Start Selling Today </button> <button class="btn btn-outline" onclick="showSection('services')" style="border-color: #fff; color: #fff; font-size: 1.1rem; padding: 1rem 2.5rem;"> Browse Services </button>
+     </div>
+    </div>
+   </div>
+  </section><!-- Services Section -->
+  <section id="services" class="section section-hidden">
+   <div class="container">
+    <h1 style="text-align: center; color: var(--primary); margin-bottom: 1rem; font-size: 2.5rem;">Discover Local Services</h1>
+    <p style="text-align: center; color: var(--subtle); margin-bottom: 3rem; font-size: 1.1rem;">Browse all available service categories</p>
+    <h2 style="color: var(--primary); margin-bottom: 2rem; font-size: 2rem;">All Categories</h2>
+    <div class="grid grid-3">
+     <div class="card" style="cursor: pointer;" onclick="showCategoryDetail('food')">
+      <div class="category-icon">
+       🍲
+      </div>
+      <h3 class="card-title">Food Services</h3>
+      <p class="card-content">Delicious homemade tiffins, catering for events, fresh baked goods, and traditional recipes prepared with love.</p>
+     </div>
+     <div class="card" style="cursor: pointer;" onclick="showCategoryDetail('beauty')">
+      <div class="category-icon">
+       💄
+      </div>
+      <h3 class="card-title">Beauty &amp; Wellness</h3>
+      <p class="card-content">Professional makeup artists, skincare specialists, mehendi artists, and spa services at your doorstep.</p>
+     </div>
+     <div class="card" style="cursor: pointer;" onclick="showCategoryDetail('tailoring')">
+      <div class="category-icon">
+       ✂️
+      </div>
+      <h3 class="card-title">Tailoring &amp; Fashion</h3>
+      <p class="card-content">Expert tailors for custom stitching, alterations, embroidery, and designer boutique services.</p>
+     </div>
+     <div class="card" style="cursor: pointer;" onclick="showCategoryDetail('education')">
+      <div class="category-icon">
+       📚
+      </div>
+      <h3 class="card-title">Education &amp; Tutoring</h3>
+      <p class="card-content">Qualified tutors for all subjects, music lessons, art classes, and skill development courses.</p>
+     </div>
+     <div class="card" style="cursor: pointer;" onclick="showCategoryDetail('crafts')">
+      <div class="category-icon">
+       🎨
+      </div>
+      <h3 class="card-title">Crafts &amp; Handmade</h3>
+      <p class="card-content">Unique handmade gifts, home decorations, custom jewelry, and personalized craft items.</p>
+     </div>
+    </div>
+   </div>
+  </section><!-- Category Detail Section -->
+  <section id="category-detail" class="section section-hidden">
+   <div class="container"><button class="btn btn-outline" onclick="showSection('services')" style="margin-bottom: 2rem;"> ← Back to All Categories </button>
+    <div id="categoryDetailContent"></div>
+   </div>
+  </section><!-- Community Section -->
+  <section id="community" class="section section-hidden">
+   <div class="container">
+    <h1 style="text-align: center; color: var(--primary); margin-bottom: 1rem; font-size: 2.5rem;">Community Hub</h1>
+    <p style="text-align: center; color: var(--subtle); margin-bottom: 3rem; font-size: 1.1rem;">Connect, learn, and grow with fellow women entrepreneurs</p>
+    <div class="grid grid-2">
+     <div class="card">
+      <h3 class="card-title">��� Community Forum</h3>
+      <p class="card-content">Join discussions, ask questions, and share your experiences with thousands of women entrepreneurs across India.</p><button class="btn" style="margin-top: 1rem;" onclick="showForumPage()">Join Conversation</button>
+     </div>
+     <div class="card">
+      <h3 class="card-title">👥 Mentorship Program</h3>
+      <p class="card-content">Get guidance from experienced entrepreneurs or become a mentor yourself. Share knowledge and build lasting connections.</p><button class="btn" style="margin-top: 1rem;" onclick="showMentorshipPage()">Find a Mentor</button>
+     </div>
+     <div class="card">
+      <h3 class="card-title">📖 Resource Library</h3>
+      <p class="card-content">Access free business guides, video tutorials, templates, and tools to help grow your home-based business.</p><button class="btn" style="margin-top: 1rem;" onclick="showResourceLibrary()">Browse Resources</button>
+     </div>
+     <div class="card">
+      <h3 class="card-title">⭐ Success Stories</h3>
+      <p class="card-content">Get inspired by real stories of women who transformed their passion into thriving businesses through our platform.</p><button class="btn" style="margin-top: 1rem;" onclick="showSuccessStories()">Read Stories</button>
+     </div>
+    </div>
+   </div>
+  </section><!-- Success Stories Section -->
+  <section id="success-stories" class="section section-hidden">
+   <div class="container">
+    <h1 style="text-align: center; color: var(--primary); margin-bottom: 1rem; font-size: 2.5rem;">Success Stories</h1>
+    <p style="text-align: center; color: var(--subtle); margin-bottom: 3rem; font-size: 1.1rem;">Real women, real businesses, real success</p>
+    <div class="grid grid-2" style="margin-bottom: 3rem;">
+     <div class="card">
+      <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
+       <div style="font-size: 4rem;">
+        👩‍🍳
+       </div>
+       <div>
+        <h3 style="color: var(--primary); font-size: 1.5rem; margin-bottom: 0.3rem;">Priya Sharma</h3>
+        <p style="color: var(--subtle);">Mumbai • Food Services</p>
+       </div>
+      </div>
+      <div style="background: var(--input-bg); padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+       <p style="color: var(--text); font-style: italic; line-height: 1.6;">"I started with just 5 tiffins a day from my small kitchen. Today, I serve 50+ families and earn ₹40,000 every month! Homepreneur Hub gave me the platform and confidence I needed. My children are proud, and I'm financially independent!"</p>
+      </div>
+      <div style="display: flex; gap: 2rem; justify-content: center; padding: 1rem; background: var(--accent); border-radius: 8px; color: var(--primary);">
+       <div style="text-align: center;">
+        <div style="font-size: 1.5rem; font-weight: 700;">
+         ₹40K
+        </div>
+        <div style="font-size: 0.85rem;">
+         Monthly Income
+        </div>
+       </div>
+       <div style="text-align: center;">
+        <div style="font-size: 1.5rem; font-weight: 700;">
+         50+
+        </div>
+        <div style="font-size: 0.85rem;">
+         Daily Orders
+        </div>
+       </div>
+       <div style="text-align: center;">
+        <div style="font-size: 1.5rem; font-weight: 700;">
+         2 Years
+        </div>
+        <div style="font-size: 0.85rem;">
+         On Platform
+        </div>
+       </div>
+      </div>
+     </div>
+     <div class="card">
+      <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
+       <div style="font-size: 4rem;">
+        💄
+       </div>
+       <div>
+        <h3 style="color: var(--primary); font-size: 1.5rem; margin-bottom: 0.3rem;">Anjali Reddy</h3>
+        <p style="color: var(--subtle);">Bangalore • Beauty &amp; Wellness</p>
+       </div>
+      </div>
+      <div style="background: var(--input-bg); padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+       <p style="color: var(--text); font-style: italic; line-height: 1.6;">"From doing makeup for friends to being fully booked every weekend! I now handle 4-5 bridal bookings per month. This platform connected me with clients who value my work. I've grown from hobby to full-time career!"</p>
+      </div>
+      <div style="display: flex; gap: 2rem; justify-content: center; padding: 1rem; background: var(--accent); border-radius: 8px; color: var(--primary);">
+       <div style="text-align: center;">
+        <div style="font-size: 1.5rem; font-weight: 700;">
+         ₹60K
+        </div>
+        <div style="font-size: 0.85rem;">
+         Monthly Income
+        </div>
+       </div>
+       <div style="text-align: center;">
+        <div style="font-size: 1.5rem; font-weight: 700;">
+         4.9★
+        </div>
+        <div style="font-size: 0.85rem;">
+         Rating
+        </div>
+       </div>
+       <div style="text-align: center;">
+        <div style="font-size: 1.5rem; font-weight: 700;">
+         180+
+        </div>
+        <div style="font-size: 0.85rem;">
+         Happy Clients
+        </div>
+       </div>
+      </div>
+     </div>
+     <div class="card">
+      <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
+       <div style="font-size: 4rem;">
+        ✂️
+       </div>
+       <div>
+        <h3 style="color: var(--primary); font-size: 1.5rem; margin-bottom: 0.3rem;">Meera Patel</h3>
+        <p style="color: var(--subtle);">Pune • Tailoring Services</p>
+       </div>
+      </div>
+      <div style="background: var(--input-bg); padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+       <p style="color: var(--text); font-style: italic; line-height: 1.6;">"My sewing machine was collecting dust. Now it's my source of income and pride! I get orders for blouses, alterations, and custom wear. The financial independence feels amazing. I'm my own boss!"</p>
+      </div>
+      <div style="display: flex; gap: 2rem; justify-content: center; padding: 1rem; background: var(--accent); border-radius: 8px; color: var(--primary);">
+       <div style="text-align: center;">
+        <div style="font-size: 1.5rem; font-weight: 700;">
+         ₹35K
+        </div>
+        <div style="font-size: 0.85rem;">
+         Monthly Income
+        </div>
+       </div>
+       <div style="text-align: center;">
+        <div style="font-size: 1.5rem; font-weight: 700;">
+         320+
+        </div>
+        <div style="font-size: 0.85rem;">
+         Orders Done
+        </div>
+       </div>
+       <div style="text-align: center;">
+        <div style="font-size: 1.5rem; font-weight: 700;">
+         18 Months
+        </div>
+        <div style="font-size: 0.85rem;">
+         Journey
+        </div>
+       </div>
+      </div>
+     </div>
+     <div class="card">
+      <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
+       <div style="font-size: 4rem;">
+        📚
+       </div>
+       <div>
+        <h3 style="color: var(--primary); font-size: 1.5rem; margin-bottom: 0.3rem;">Lakshmi Iyer</h3>
+        <p style="color: var(--subtle);">Chennai • Education</p>
+       </div>
+      </div>
+      <div style="background: var(--input-bg); padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+       <p style="color: var(--text); font-style: italic; line-height: 1.6;">"Teaching was always my passion. Now I tutor 12 students from home and earn while being there for my kids. The flexibility and income have changed our family's life. Thank you Homepreneur Hub!"</p>
+      </div>
+      <div style="display: flex; gap: 2rem; justify-content: center; padding: 1rem; background: var(--accent); border-radius: 8px; color: var(--primary);">
+       <div style="text-align: center;">
+        <div style="font-size: 1.5rem; font-weight: 700;">
+         ₹28K
+        </div>
+        <div style="font-size: 0.85rem;">
+         Monthly Income
+        </div>
+       </div>
+       <div style="text-align: center;">
+        <div style="font-size: 1.5rem; font-weight: 700;">
+         12
+        </div>
+        <div style="font-size: 0.85rem;">
+         Students
+        </div>
+       </div>
+       <div style="text-align: center;">
+        <div style="font-size: 1.5rem; font-weight: 700;">
+         5.0★
+        </div>
+        <div style="font-size: 0.85rem;">
+         Rating
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+    <div style="text-align: center; padding: 3rem 2rem; background: var(--gradient-bg); border-radius: 20px; color: #fff;">
+     <h2 style="font-size: 2rem; margin-bottom: 1rem;">Your Success Story Starts Here</h2>
+     <p style="font-size: 1.1rem; margin-bottom: 2rem; opacity: 0.95;">Join thousands of women building their dreams</p><button class="btn" onclick="showRegisterModal()" style="background: #fff; color: var(--primary); font-size: 1.1rem; padding: 1rem 2.5rem;">Start Your Journey Today</button>
+    </div>
+   </div>
+  </section><!-- How It Works Section -->
+  <section id="how-it-works" class="section section-hidden">
+   <div class="container">
+    <h1 style="text-align: center; color: var(--primary); margin-bottom: 1rem; font-size: 2.5rem;">How It Works</h1>
+    <p style="text-align: center; color: var(--subtle); margin-bottom: 3rem; font-size: 1.1rem;">Simple steps to start your journey</p>
+    <div style="margin-bottom: 4rem;">
+     <h2 style="color: var(--primary); margin-bottom: 2rem; font-size: 2rem; text-align: center;">For Service Providers</h2>
+     <div class="grid grid-4">
+      <div style="text-align: center; padding: 2rem;">
+       <div style="width: 60px; height: 60px; background: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 1.5rem; font-weight: 700; color: var(--primary);">
+        1
+       </div>
+       <h3 style="color: var(--primary); margin-bottom: 0.5rem;">Sign Up Free</h3>
+       <p style="color: var(--text);">Register as a Service Owner in minutes. No hidden fees!</p>
+      </div>
+      <div style="text-align: center; padding: 2rem;">
+       <div style="width: 60px; height: 60px; background: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 1.5rem; font-weight: 700; color: var(--primary);">
+        2
+       </div>
+       <h3 style="color: var(--primary); margin-bottom: 0.5rem;">Create Profile</h3>
+       <p style="color: var(--text);">Showcase your services, add photos, and set your prices</p>
+      </div>
+      <div style="text-align: center; padding: 2rem;">
+       <div style="width: 60px; height: 60px; background: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 1.5rem; font-weight: 700; color: var(--primary);">
+        3
+       </div>
+       <h3 style="color: var(--primary); margin-bottom: 0.5rem;">Get Orders</h3>
+       <p style="color: var(--text);">Customers find you through our platform and AI search</p>
+      </div>
+      <div style="text-align: center; padding: 2rem;">
+       <div style="width: 60px; height: 60px; background: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 1.5rem; font-weight: 700; color: var(--primary);">
+        4
+       </div>
+       <h3 style="color: var(--primary); margin-bottom: 0.5rem;">Earn Money</h3>
+       <p style="color: var(--text);">Deliver services and receive payments directly</p>
+      </div>
+     </div>
+    </div>
+    <div style="margin-bottom: 4rem;">
+     <h2 style="color: var(--primary); margin-bottom: 2rem; font-size: 2rem; text-align: center;">For Customers</h2>
+     <div class="grid grid-4">
+      <div style="text-align: center; padding: 2rem;">
+       <div style="width: 60px; height: 60px; background: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 1.5rem; font-weight: 700; color: var(--primary);">
+        1
+       </div>
+       <h3 style="color: var(--primary); margin-bottom: 0.5rem;">Browse Services</h3>
+       <p style="color: var(--text);">Explore categories or use AI-powered smart search</p>
+      </div>
+      <div style="text-align: center; padding: 2rem;">
+       <div style="width: 60px; height: 60px; background: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 1.5rem; font-weight: 700; color: var(--primary);">
+        2
+       </div>
+       <h3 style="color: var(--primary); margin-bottom: 0.5rem;">Choose Provider</h3>
+       <p style="color: var(--text);">Check ratings, reviews, and portfolios before booking</p>
+      </div>
+      <div style="text-align: center; padding: 2rem;">
+       <div style="width: 60px; height: 60px; background: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 1.5rem; font-weight: 700; color: var(--primary);">
+        3
+       </div>
+       <h3 style="color: var(--primary); margin-bottom: 0.5rem;">Book &amp; Pay</h3>
+       <p style="color: var(--text);">Secure booking with flexible payment options</p>
+      </div>
+      <div style="text-align: center; padding: 2rem;">
+       <div style="width: 60px; height: 60px; background: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 1.5rem; font-weight: 700; color: var(--primary);">
+        4
+       </div>
+       <h3 style="color: var(--primary); margin-bottom: 0.5rem;">Enjoy Service</h3>
+       <p style="color: var(--text);">Receive quality service and leave a review</p>
+      </div>
+     </div>
+    </div>
+    <div class="card" style="text-align: center; padding: 3rem 2rem;">
+     <h2 style="color: var(--primary); margin-bottom: 1rem;">Ready to Get Started?</h2>
+     <p style="color: var(--text); margin-bottom: 2rem; font-size: 1.1rem;">Join our community today and experience the difference</p>
+     <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;"><button class="btn" onclick="showRegisterModal()">Sign Up Now</button> <button class="btn btn-outline" onclick="showSection('services')">Browse Services</button>
+     </div>
+    </div>
+   </div>
+  </section><!-- Safety Guidelines Section -->
+  <section id="safety-guidelines" class="section section-hidden">
+   <div class="container">
+    <h1 style="text-align: center; color: var(--primary); margin-bottom: 1rem; font-size: 2.5rem;">Safety Guidelines</h1>
+    <p style="text-align: center; color: var(--subtle); margin-bottom: 3rem; font-size: 1.1rem;">Your safety and security are our top priorities</p>
+    <div class="grid grid-2">
+     <div class="card">
+      <h3 class="card-title">🛡️ For Service Providers</h3>
+      <ul style="color: var(--text); line-height: 2; margin-top: 1rem;">
+       <li>✓ Verify customer identity before providing service</li>
+       <li>✓ Meet customers in safe, public locations when possible</li>
+       <li>✓ Share your service schedule with family members</li>
+       <li>✓ Use secure payment methods through our platform</li>
+       <li>✓ Report suspicious behavior immediately</li>
+       <li>✓ Keep communication on platform for safety</li>
+       <li>✓ Trust your instincts - decline uncomfortable requests</li>
+      </ul>
+     </div>
+     <div class="card">
+      <h3 class="card-title">🔒 For Customers</h3>
+      <ul style="color: var(--text); line-height: 2; margin-top: 1rem;">
+       <li>✓ Check provider ratings and reviews before booking</li>
+       <li>✓ Communicate service details clearly upfront</li>
+       <li>✓ Use secure payment methods on our platform</li>
+       <li>✓ Be respectful of provider's time and boundaries</li>
+       <li>✓ Report any issues or concerns immediately</li>
+       <li>✓ Verify service provider credentials when needed</li>
+       <li>✓ Keep interactions professional and courteous</li>
+      </ul>
+     </div>
+     <div class="card">
+      <h3 class="card-title">💳 Payment Safety</h3>
+      <ul style="color: var(--text); line-height: 2; margin-top: 1rem;">
+       <li>✓ Always use platform's secure payment system</li>
+       <li>✓ Never share bank details or OTPs with anyone</li>
+       <li>✓ Get service confirmation before making payment</li>
+       <li>✓ Report payment disputes within 48 hours</li>
+       <li>✓ Keep transaction records for reference</li>
+       <li>✓ Beware of requests for advance full payment</li>
+      </ul>
+     </div>
+     <div class="card">
+      <h3 class="card-title">📱 Privacy Protection</h3>
+      <ul style="color: var(--text); line-height: 2; margin-top: 1rem;">
+       <li>✓ Control what information you share publicly</li>
+       <li>✓ Use platform messaging for communication</li>
+       <li>✓ Don't share personal documents unnecessarily</li>
+       <li>✓ Review privacy settings regularly</li>
+       <li>✓ Report spam or harassment immediately</li>
+       <li>✓ Be cautious about sharing home address initially</li>
+      </ul>
+     </div>
+    </div>
+    <div style="margin-top: 3rem; padding: 2rem; background: var(--input-bg); border-radius: 16px; border-left: 4px solid var(--primary);">
+     <h3 style="color: var(--primary); margin-bottom: 1rem;">🚨 Emergency Support</h3>
+     <p style="color: var(--text); margin-bottom: 1rem;">If you face any safety concerns or emergencies:</p>
+     <div style="display: flex; gap: 2rem; flex-wrap: wrap; margin-top: 1rem;">
+      <div><strong style="color: var(--primary);">Helpline:</strong>
+       <p style="color: var(--text); font-size: 1.2rem; font-weight: 600;">1800-123-4567</p>
+      </div>
+      <div><strong style="color: var(--primary);">Email:</strong>
+       <p style="color: var(--text); font-size: 1.1rem; font-weight: 600;">safety@homepreneurbub.com</p>
+      </div>
+      <div><strong style="color: var(--primary);">Available:</strong>
+       <p style="color: var(--text); font-weight: 600;">24/7 Emergency Support</p>
+      </div>
+     </div>
+    </div>
+   </div>
+  </section><!-- Privacy Policy Section -->
+  <section id="privacy-policy" class="section section-hidden">
+   <div class="container">
+    <h1 style="text-align: center; color: var(--primary); margin-bottom: 1rem; font-size: 2.5rem;">Privacy Policy</h1>
+    <p style="text-align: center; color: var(--subtle); margin-bottom: 3rem;">Last updated: January 2025</p>
+    <div class="card">
+     <h3 class="card-title">Information We Collect</h3>
+     <p class="card-content">We collect information you provide directly (name, email, phone, business details) and automatically (device info, usage data). This helps us provide and improve our services.</p>
+    </div>
+    <div class="card">
+     <h3 class="card-title">How We Use Your Information</h3>
+     <p class="card-content">Your data helps us operate the platform, connect service providers with customers, process payments, send updates, and improve user experience. We never sell your personal information.</p>
+    </div>
+    <div class="card">
+     <h3 class="card-title">Data Security</h3>
+     <p class="card-content">We use industry-standard encryption and security measures to protect your data. All payment information is processed through secure, PCI-compliant payment gateways.</p>
+    </div>
+    <div class="card">
+     <h3 class="card-title">Your Rights</h3>
+     <p class="card-content">You can access, update, or delete your personal information anytime. You control your privacy settings and can opt out of marketing communications. Contact us for data-related requests.</p>
+    </div>
+    <div class="card">
+     <h3 class="card-title">Contact Us About Privacy</h3>
+     <p class="card-content">For privacy concerns or questions: <strong style="color: var(--primary);">privacy@homepreneurbub.com</strong></p>
+    </div>
+   </div>
+  </section><!-- Terms of Service Section -->
+  <section id="terms-of-service" class="section section-hidden">
+   <div class="container">
+    <h1 style="text-align: center; color: var(--primary); margin-bottom: 1rem; font-size: 2.5rem;">Terms of Service</h1>
+    <p style="text-align: center; color: var(--subtle); margin-bottom: 3rem;">Last updated: January 2025</p>
+    <div class="card">
+     <h3 class="card-title">1. Acceptance of Terms</h3>
+     <p class="card-content">By using Homepreneur Hub, you agree to these terms. If you disagree with any part, please do not use our platform.</p>
+    </div>
+    <div class="card">
+     <h3 class="card-title">2. User Accounts</h3>
+     <p class="card-content">You must provide accurate information when registering. You're responsible for maintaining account security and all activities under your account. Notify us immediately of unauthorized access.</p>
+    </div>
+    <div class="card">
+     <h3 class="card-title">3. Service Provider Responsibilities</h3>
+     <p class="card-content">Providers must deliver services as described, maintain professional conduct, comply with local laws and regulations, and provide accurate business information. Quality and professionalism are expected.</p>
+    </div>
+    <div class="card">
+     <h3 class="card-title">4. Customer Responsibilities</h3>
+     <p class="card-content">Customers must provide accurate service requirements, make timely payments, treat providers respectfully, and report any issues promptly through proper channels.</p>
+    </div>
+    <div class="card">
+     <h3 class="card-title">5. Payments &amp; Fees</h3>
+     <p class="card-content">We charge a small commission on successful transactions. Payment terms are clearly displayed. Refunds are handled according to our refund policy on a case-by-case basis.</p>
+    </div>
+    <div class="card">
+     <h3 class="card-title">6. Prohibited Activities</h3>
+     <p class="card-content">No fraudulent activities, harassment, spam, misrepresentation, or illegal services. Violations result in account suspension or termination.</p>
+    </div>
+    <div class="card">
+     <h3 class="card-title">7. Limitation of Liability</h3>
+     <p class="card-content">Homepreneur Hub is a platform connecting service providers and customers. We're not liable for service quality, disputes between parties, or indirect damages. Users interact at their own risk.</p>
+    </div>
+    <div class="card">
+     <h3 class="card-title">8. Contact for Legal Matters</h3>
+     <p class="card-content">For terms-related questions: <strong style="color: var(--primary);">legal@homepreneurbub.com</strong></p>
+    </div>
+   </div>
+  </section><!-- Help Center Section -->
+  <section id="help" class="section section-hidden">
+   <div class="container">
+    <h1 style="text-align: center; color: var(--primary); margin-bottom: 1rem; font-size: 2.5rem;">Help Center</h1>
+    <p style="text-align: center; color: var(--subtle); margin-bottom: 3rem; font-size: 1.1rem;">Quick access support for all your questions</p>
+    <div class="grid grid-3">
+     <div class="card" style="text-align: center;">
+      <div style="font-size: 3rem; margin-bottom: 1rem;">
+       📞
+      </div>
+      <h3 class="card-title">Call Us</h3>
+      <p class="card-content" style="margin-bottom: 1rem;">Speak directly with our support team</p>
+      <p style="color: var(--primary); font-size: 1.2rem; font-weight: 600; margin-bottom: 1rem;">1800-123-4567</p>
+      <p style="color: var(--subtle); font-size: 0.9rem;">Mon-Sat, 9 AM - 8 PM</p>
+     </div>
+     <div class="card" style="text-align: center;">
+      <div style="font-size: 3rem; margin-bottom: 1rem;">
+       ✉️
+      </div>
+      <h3 class="card-title">Email Support</h3>
+      <p class="card-content" style="margin-bottom: 1rem;">Send us your queries anytime</p>
+      <p style="color: var(--primary); font-size: 1.1rem; font-weight: 600; margin-bottom: 1rem;">support@homepreneurbub.com</p>
+      <p style="color: var(--subtle); font-size: 0.9rem;">Response within 24 hours</p>
+     </div>
+     <div class="card" style="text-align: center;">
+      <div style="font-size: 3rem; margin-bottom: 1rem;">
+       💬
+      </div>
+      <h3 class="card-title">Live Chat</h3>
+      <p class="card-content" style="margin-bottom: 1rem;">Chat with our AI assistant or human agent</p><button class="btn" style="margin-top: 1rem;" onclick="openChatbotAssistant()">Start Chat</button>
+     </div>
+    </div>
+    <div style="margin-top: 3rem;">
+     <h2 style="color: var(--primary); margin-bottom: 2rem; font-size: 2rem;">Frequently Asked Questions</h2>
+     <div class="grid grid-2">
+      <div class="card">
+       <h4 style="color: var(--primary); margin-bottom: 0.8rem;">How do I register as a service provider?</h4>
+       <p style="color: var(--text);">Click on "Sign Up", select "Service Owner", fill in your business details, and you're ready to start!</p>
+      </div>
+      <div class="card">
+       <h4 style="color: var(--primary); margin-bottom: 0.8rem;">Is there any registration fee?</h4>
+       <p style="color: var(--text);">No! Registration is completely free. We only charge a small commission on successful bookings.</p>
+      </div>
+      <div class="card">
+       <h4 style="color: var(--primary); margin-bottom: 0.8rem;">How do customers find my services?</h4>
+       <p style="color: var(--text);">Customers can browse by category, location, and use our AI-powered search to find services that match their needs.</p>
+      </div>
+      <div class="card">
+       <h4 style="color: var(--primary); margin-bottom: 0.8rem;">How do I receive payments?</h4>
+       <p style="color: var(--text);">Payments are processed securely through our platform and transferred directly to your bank account.</p>
+      </div>
+      <div class="card">
+       <h4 style="color: var(--primary); margin-bottom: 0.8rem;">Can I offer services in multiple categories?</h4>
+       <p style="color: var(--text);">Yes! You can select multiple categories when registering and showcase all your skills.</p>
+      </div>
+      <div class="card">
+       <h4 style="color: var(--primary); margin-bottom: 0.8rem;">What if I face technical issues?</h4>
+       <p style="color: var(--text);">Contact our support team via phone, email, or live chat. We're here to help you resolve any issues quickly.</p>
+      </div>
+     </div>
+    </div>
+   </div>
+  </section><!-- Profile Dashboard Section -->
+  <section id="profile" class="section section-hidden">
+   <div class="container">
+    <h1 style="text-align: center; color: var(--primary); margin-bottom: 3rem; font-size: 2.5rem;">My Dashboard</h1>
+    <div id="profileDashboard"></div>
+   </div>
+  </section><!-- AI Menu -->
+  <div id="aiMenu" class="chatbot-menu">
+   <div class="chatbot-menu-item" onclick="openChatbotAssistant()">
+    <div class="chatbot-menu-icon">
+     💬
+    </div>
+    <div class="chatbot-menu-content">
+     <div class="chatbot-menu-title">
+      AI Chatbot Assistant
+     </div>
+     <div class="chatbot-menu-desc">
+      Chat with our AI for instant help
+     </div>
+    </div>
+   </div>
+   <div class="chatbot-menu-item" onclick="openSmartSearch()">
+    <div class="chatbot-menu-icon">
+     🔍
+    </div>
+    <div class="chatbot-menu-content">
+     <div class="chatbot-menu-title">
+      Smart Search
+     </div>
+     <div class="chatbot-menu-desc">
+      AI-powered service matching
+     </div>
+    </div>
+   </div>
+  </div><!-- AI Chatbot -->
+  <div id="chatbotContainer" class="chatbot-container">
+   <div class="chatbot-header">
+    <div class="chatbot-title">
+     🤖 AI Assistant
+    </div>
+    <div style="display: flex; gap: 0.5rem;"><button class="chatbot-close-btn" onclick="showHelpCenterFromChat()" style="background: rgba(255,255,255,0.15); font-size: 1rem;" title="Help Center"> 🆘 </button> <button class="chatbot-close-btn" onclick="closeChatbot()">×</button>
+    </div>
+   </div>
+   <div id="chatbotMessages" class="chatbot-messages">
+    <div class="chat-message bot">
+     <div class="message-avatar bot">
+      🤖
+     </div>
+     <div class="message-bubble">
+      Hi! I'm your AI assistant for Homepreneur Hub. I can help you find services, answer questions about our platform, or guide you through registration. What can I help you with today?
+     </div>
+    </div>
+   </div>
+   <div class="chatbot-input-area"><input type="text" id="chatbotInput" class="chatbot-input" placeholder="Type your message..." onkeypress="handleChatEnter(event)"> <button class="chatbot-send-btn" onclick="sendMessage()" id="chatbotSendBtn"> ➤ </button>
+   </div>
+  </div><!-- Smart Search Container -->
+  <div id="smartSearchContainer" class="chatbot-container" style="display: none;">
+   <div class="chatbot-header">
+    <div class="chatbot-title">
+     🔍 Smart Search
+    </div><button class="chatbot-close-btn" onclick="closeSmartSearch()">×</button>
+   </div>
+   <div id="smartSearchContent" class="chatbot-messages">
+    <div style="padding: 1rem;">
+     <h3 style="color: var(--primary); margin-bottom: 1rem; font-size: 1.2rem;">What service are you looking for?</h3>
+     <p style="color: var(--subtle); margin-bottom: 1.5rem; font-size: 0.9rem;">Describe what you need, and our AI will find the perfect match with quality predictions</p>
+     <div class="form-group"><label for="smartSearchInput">Describe your requirement</label> <textarea id="smartSearchInput" placeholder="E.g., I need a tiffin service for vegetarian food in Mumbai, or I'm looking for bridal makeup artist..." style="min-height: 100px;"></textarea>
+     </div><button class="btn" onclick="performSmartSearch()" id="searchBtn" style="width: 100%; margin-top: 1rem;"> 🔍 Search with AI </button>
+     <div id="searchResults" style="margin-top: 2rem; display: none;"></div>
+    </div>
+   </div>
+  </div><!-- Footer -->
+  <footer>
+   <div class="footer-content">
+    <div class="footer-section">
+     <h4>🏠 Homepreneur Hub</h4>
+     <p style="color: rgba(255, 255, 255, 0.8); line-height: 1.6;">Empowering women entrepreneurs to build successful home-based businesses and create thriving communities.</p>
+    </div>
+    <div class="footer-section">
+     <h4>For Entrepreneurs</h4>
+     <ul class="footer-links">
+      <li><a href="#" onclick="event.preventDefault(); showRegisterModal()">Start Selling</a></li>
+      <li><a href="#" onclick="event.preventDefault(); showResourceLibrary()">Business Resources</a></li>
+      <li><a href="#" onclick="event.preventDefault(); showSuccessStoriesPage()">Success Stories</a></li>
+      <li><a href="#" onclick="event.preventDefault(); showForumPage()">Community Forum</a></li>
+     </ul>
+    </div>
+    <div class="footer-section">
+     <h4>For Customers</h4>
+     <ul class="footer-links">
+      <li><a href="#" onclick="event.preventDefault(); showSection('services')">Browse Services</a></li>
+      <li><a href="#" onclick="event.preventDefault(); showHowItWorks()">How It Works</a></li>
+      <li><a href="#" onclick="event.preventDefault(); showSection('help')">Customer Support</a></li>
+      <li><a href="#" onclick="event.preventDefault(); showSafetyGuidelines()">Safety Guidelines</a></li>
+     </ul>
+    </div>
+    <div class="footer-section">
+     <h4>Support</h4>
+     <ul class="footer-links">
+      <li><a href="#" onclick="event.preventDefault(); showSection('help')">Help Center</a></li>
+      <li><a href="#" onclick="event.preventDefault(); showContactUsModal()">Contact Us</a></li>
+      <li><a href="#" onclick="event.preventDefault(); showPrivacyPolicy()">Privacy Policy</a></li>
+      <li><a href="#" onclick="event.preventDefault(); showTermsOfService()">Terms of Service</a></li>
+     </ul>
+    </div>
+   </div>
+   <div class="footer-bottom">
+    <p>© 2025 Homepreneur Hub. All rights reserved. Made with ❤️ for women entrepreneurs.</p>
+   </div>
+  </footer><!-- Login Modal -->
+  <div id="loginModal" style="display: none;">
+   <div class="modal-overlay" onclick="closeModalOnOverlay(event, 'loginModal')">
+    <div class="modal"><button class="modal-close" onclick="closeModal('loginModal')">×</button>
+     <h2 class="modal-title">Welcome Back</h2>
+     <form id="loginForm" onsubmit="handleLogin(event)">
+      <div class="form-group"><label for="loginEmail">Email address</label> <input type="email" id="loginEmail" required placeholder="you@example.com">
+      </div>
+      <div class="form-group"><label for="loginPassword">Password</label> <input type="password" id="loginPassword" required placeholder="••••••••">
+      </div>
+      <div class="form-actions"><button type="submit" class="btn" style="width: 100%;">Log In</button>
+      </div>
+      <div class="form-footer">
+       Don't have an account? <a href="#" onclick="event.preventDefault(); switchToRegister()">Sign up</a>
+      </div>
+     </form>
+    </div>
+   </div>
+  </div><!-- Register Modal -->
+  <div id="registerModal" style="display: none;">
+   <div class="modal-overlay" onclick="closeModalOnOverlay(event, 'registerModal')">
+    <div class="modal"><button class="modal-close" onclick="closeModal('registerModal')">×</button>
+     <h2 class="modal-title">Join Homepreneur Hub</h2>
+     <form id="registerForm" onsubmit="handleRegister(event)">
+      <div class="form-group"><label for="registerUserType">I want to register as</label>
+       <div class="radio-group"><label class="radio-label"> <input type="radio" name="userType" value="customer" id="registerCustomer" checked onchange="toggleRegistrationFields()"> <span style="color: var(--text); font-weight: 500;">Customer</span> </label> <label class="radio-label"> <input type="radio" name="userType" value="owner" id="registerOwner" onchange="toggleRegistrationFields()"> <span style="color: var(--text); font-weight: 500;">Service Owner</span> </label>
+       </div>
+      </div><!-- Common Fields -->
+      <div class="form-group"><label for="registerName">Full Name</label> <input type="text" id="registerName" required placeholder="Your name">
+      </div>
+      <div class="form-group"><label for="registerEmail">Email address</label> <input type="email" id="registerEmail" required placeholder="you@example.com">
+      </div>
+      <div class="form-group"><label for="registerPhone">Phone Number</label> <input type="tel" id="registerPhone" required placeholder="+91 98765 43210">
+      </div><!-- Customer-specific Fields -->
+      <div id="customerFields" style="display: block;">
+       <div class="form-group"><label for="customerAddress">Address</label> <textarea id="customerAddress" placeholder="Enter your complete address"></textarea>
+       </div>
+      </div><!-- Owner-specific Fields -->
+      <div id="ownerFields" style="display: none;">
+       <div class="form-group"><label for="businessName">Business Name</label> <input type="text" id="businessName" placeholder="Your business name">
+       </div>
+       <div class="form-group"><label for="businessAbout">About Your Business</label> <textarea id="businessAbout" placeholder="Tell us about your business and what you offer"></textarea>
+       </div>
+       <div class="form-group"><label for="businessLocation">Business Location</label> <input type="text" id="businessLocation" placeholder="City, Area">
+       </div>
+       <div class="form-group"><label for="businessExperience">Years of Experience</label> <input type="number" id="businessExperience" min="0" max="50" placeholder="e.g., 5">
+       </div>
+       <div class="form-group"><label>Business Categories (select all that apply)</label>
+        <div class="checkbox-group"><label class="checkbox-label"> <input type="checkbox" name="categories" value="food"> <span>🍲 Food Services</span> </label> <label class="checkbox-label"> <input type="checkbox" name="categories" value="beauty"> <span>💄 Beauty &amp; Wellness</span> </label> <label class="checkbox-label"> <input type="checkbox" name="categories" value="tailoring"> <span>✂️ Tailoring</span> </label> <label class="checkbox-label"> <input type="checkbox" name="categories" value="tutoring"> <span>📚 Tutoring</span> </label> <label class="checkbox-label"> <input type="checkbox" name="categories" value="crafts"> <span>🎨 Crafts &amp; Art</span> </label> <label class="checkbox-label"> <input type="checkbox" name="categories" value="other" id="categoryOther" onchange="toggleOtherCategory()"> <span>✨ Other</span> </label>
+        </div>
+       </div>
+       <div class="form-group" id="otherCategoryField" style="display: none;"><label for="otherCategoryText">Specify Your Category</label> <input type="text" id="otherCategoryText" placeholder="e.g., Event Planning, Graphic Design, etc.">
+       </div>
+       <div class="form-group"><label for="socialHandle">Social Media Handle (Optional)</label> <input type="text" id="socialHandle" placeholder="@yourusername or profile link">
+       </div>
+      </div>
+      <div class="form-group"><label for="registerPassword">Password</label> <input type="password" id="registerPassword" required placeholder="••••••••" minlength="6">
+      </div>
+      <div class="form-actions"><button type="submit" class="btn" style="width: 100%;">Create Account</button>
+      </div>
+      <div class="form-footer">
+       Already have an account? <a href="#" onclick="event.preventDefault(); switchToLogin()">Log in</a>
+      </div>
+     </form>
+    </div>
+   </div>
+  </div><!-- Contact Us Modal -->
+  <div id="contactModal" style="display: none;">
+   <div class="modal-overlay" onclick="closeModalOnOverlay(event, 'contactModal')">
+    <div class="modal"><button class="modal-close" onclick="closeModal('contactModal')">×</button>
+     <h2 class="modal-title">Contact Us</h2>
+     <div style="text-align: center; margin-bottom: 2rem;">
+      <p style="color: var(--subtle); font-size: 1rem;">We're here to help! Reach out to us anytime</p>
+     </div>
+     <div style="display: grid; gap: 1.5rem; margin-bottom: 2rem;">
+      <div style="background: var(--input-bg); padding: 1.5rem; border-radius: 12px; text-align: center;">
+       <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">
+        📞
+       </div>
+       <h3 style="color: var(--primary); margin-bottom: 0.5rem;">Call Us</h3>
+       <p style="color: var(--primary); font-size: 1.3rem; font-weight: 600; margin-bottom: 0.3rem;">1800-123-4567</p>
+       <p style="color: var(--subtle); font-size: 0.9rem;">Mon-Sat: 9 AM - 8 PM</p>
+      </div>
+      <div style="background: var(--input-bg); padding: 1.5rem; border-radius: 12px; text-align: center;">
+       <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">
+        ✉️
+       </div>
+       <h3 style="color: var(--primary); margin-bottom: 0.5rem;">Email Us</h3>
+       <p style="color: var(--primary); font-size: 1.1rem; font-weight: 600; margin-bottom: 0.3rem;">support@homepreneurbub.com</p>
+       <p style="color: var(--subtle); font-size: 0.9rem;">Response within 24 hours</p>
+      </div>
+      <div style="background: var(--input-bg); padding: 1.5rem; border-radius: 12px; text-align: center;">
+       <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">
+        💬
+       </div>
+       <h3 style="color: var(--primary); margin-bottom: 0.5rem;">Live Chat</h3><button class="btn" onclick="closeModal('contactModal'); openChatbotAssistant();">Start Chat Now</button>
+      </div>
+     </div>
+     <form id="contactForm" onsubmit="handleContactForm(event)" style="border-top: 1px solid var(--input-border); padding-top: 1.5rem;">
+      <h3 style="color: var(--primary); margin-bottom: 1rem; font-size: 1.1rem;">Send us a Message</h3>
+      <div class="form-group"><label for="contactName">Your Name</label> <input type="text" id="contactName" required placeholder="Enter your name">
+      </div>
+      <div class="form-group"><label for="contactEmail">Your Email</label> <input type="email" id="contactEmail" required placeholder="your@email.com">
+      </div>
+      <div class="form-group"><label for="contactMessage">Message</label> <textarea id="contactMessage" required placeholder="How can we help you?" style="min-height: 100px;"></textarea>
+      </div><button type="submit" class="btn" style="width: 100%;">Send Message</button>
+     </form>
+    </div>
+   </div>
+  </div><!-- Toast -->
+  <div id="toast" class="toast"></div>
+  <script>
+        // State management
+        let currentUser = null;
+        let isLoggedIn = false;
+
+        // Sample data for demo
+        let sampleOrders = [
+            { id: 1, service: "Priya's Kitchen - Veg Tiffin", date: "2024-01-15", status: "completed", amount: 450 },
+            { id: 2, service: "Anjali Beauty - Bridal Makeup", date: "2024-01-20", status: "completed", amount: 12000 },
+            { id: 3, service: "Meera's Tailoring - Saree Blouse", date: "2024-01-25", status: "pending", amount: 800 }
+        ];
+
+        // Toggle registration fields based on user type
+        function toggleRegistrationFields() {
+            const userType = document.querySelector('input[name="userType"]:checked').value;
+            const customerFields = document.getElementById('customerFields');
+            const ownerFields = document.getElementById('ownerFields');
+            
+            if (userType === 'customer') {
+                customerFields.style.display = 'block';
+                ownerFields.style.display = 'none';
+                
+                document.getElementById('businessName').removeAttribute('required');
+                document.getElementById('businessAbout').removeAttribute('required');
+                document.getElementById('businessLocation').removeAttribute('required');
+                document.getElementById('businessExperience').removeAttribute('required');
+                document.getElementById('customerAddress').setAttribute('required', 'required');
+            } else {
+                customerFields.style.display = 'none';
+                ownerFields.style.display = 'block';
+                
+                document.getElementById('customerAddress').removeAttribute('required');
+                document.getElementById('businessName').setAttribute('required', 'required');
+                document.getElementById('businessAbout').setAttribute('required', 'required');
+                document.getElementById('businessLocation').setAttribute('required', 'required');
+                document.getElementById('businessExperience').setAttribute('required', 'required');
+            }
+        }
+
+        function toggleOtherCategory() {
+            const otherCheckbox = document.getElementById('categoryOther');
+            const otherField = document.getElementById('otherCategoryField');
+            const otherInput = document.getElementById('otherCategoryText');
+            
+            if (otherCheckbox.checked) {
+                otherField.style.display = 'block';
+                otherInput.setAttribute('required', 'required');
+            } else {
+                otherField.style.display = 'none';
+                otherInput.removeAttribute('required');
+                otherInput.value = '';
+            }
+        }
+
+        // Data SDK Handler
+        const dataHandler = {
+            onDataChanged(users) {
+                if (currentUser) {
+                    const storedUser = users.find(u => u.email === currentUser.email);
+                    if (storedUser) {
+                        currentUser = storedUser;
+                        updateUIAfterLogin();
+                    }
+                }
+            }
+        };
+
+        async function initDataSDK() {
+            const result = await window.dataSdk.init(dataHandler);
+            if (!result.isOk) {
+                console.error('Failed to initialize Data SDK');
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', function() {
+            initDataSDK();
+            showSection('home');
+            checkExistingSession();
+        });
+
+        // Initialize Element SDK
+        const defaultConfig = {
+            background_color: "#f8f5f2",
+            primary_color: "#835b36",
+            accent_color: "#e2b07d",
+            text_color: "#5d3a20",
+            card_color: "#fffefa"
+        };
+
+        async function onConfigChange(config) {
+            document.documentElement.style.setProperty('--bg', config.background_color || defaultConfig.background_color);
+            document.documentElement.style.setProperty('--primary', config.primary_color || defaultConfig.primary_color);
+            document.documentElement.style.setProperty('--accent', config.accent_color || defaultConfig.accent_color);
+            document.documentElement.style.setProperty('--text', config.text_color || defaultConfig.text_color);
+            document.documentElement.style.setProperty('--card-bg', config.card_color || defaultConfig.card_color);
+        }
+
+        if (window.elementSdk) {
+            window.elementSdk.init({
+                defaultConfig: defaultConfig,
+                onConfigChange: onConfigChange,
+                mapToCapabilities: (config) => ({
+                    recolorables: [
+                        {
+                            get: () => config.background_color || defaultConfig.background_color,
+                            set: (value) => {
+                                config.background_color = value;
+                                window.elementSdk.setConfig({ background_color: value });
+                            }
+                        },
+                        {
+                            get: () => config.primary_color || defaultConfig.primary_color,
+                            set: (value) => {
+                                config.primary_color = value;
+                                window.elementSdk.setConfig({ primary_color: value });
+                            }
+                        },
+                        {
+                            get: () => config.accent_color || defaultConfig.accent_color,
+                            set: (value) => {
+                                config.accent_color = value;
+                                window.elementSdk.setConfig({ accent_color: value });
+                            }
+                        },
+                        {
+                            get: () => config.text_color || defaultConfig.text_color,
+                            set: (value) => {
+                                config.text_color = value;
+                                window.elementSdk.setConfig({ text_color: value });
+                            }
+                        },
+                        {
+                            get: () => config.card_color || defaultConfig.card_color,
+                            set: (value) => {
+                                config.card_color = value;
+                                window.elementSdk.setConfig({ card_color: value });
+                            }
+                        }
+                    ],
+                    borderables: [],
+                    fontEditable: undefined,
+                    fontSizeable: undefined
+                }),
+                mapToEditPanelValues: (config) => new Map()
+            });
+        }
+
+        function checkExistingSession() {
+            const savedUser = localStorage.getItem('currentUser');
+            if (savedUser) {
+                currentUser = JSON.parse(savedUser);
+                isLoggedIn = true;
+                updateUIAfterLogin();
+            }
+        }
+
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => {
+                section.classList.add('section-hidden');
+            });
+            
+            document.getElementById(sectionId).classList.remove('section-hidden');
+            
+            const navButtons = document.querySelectorAll('.nav-btn');
+            navButtons.forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            event?.target?.classList?.add('active');
+            
+            window.scrollTo(0, 0);
+            document.getElementById('profileDropdown').classList.remove('show');
+
+            // Render dashboard if profile section
+            if (sectionId === 'profile' && currentUser) {
+                renderDashboard();
+            }
+        }
+
+        function renderDashboard() {
+            const dashboard = document.getElementById('profileDashboard');
+            
+            if (currentUser.user_type === 'owner') {
+                // Owner Dashboard
+                dashboard.innerHTML = `
+                    <!-- Business Overview -->
+                    <div class="card" style="margin-bottom: 2rem;">
+                        <h2 class="card-title">Business Overview</h2>
+                        <div class="stat-grid">
+                            <div class="stat-box">
+                                <div class="stat-value">24</div>
+                                <div class="stat-label">Total Orders</div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-value">₹18,500</div>
+                                <div class="stat-label">Total Earnings</div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-value">4.8</div>
+                                <div class="stat-label">Average Rating</div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-value">89%</div>
+                                <div class="stat-label">Completion Rate</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Portfolio Section -->
+                    <div class="card" style="margin-bottom: 2rem;">
+                        <h2 class="card-title">My Portfolio</h2>
+                        <p style="color: var(--subtle); margin-bottom: 1rem;">Upload images of your work to showcase your skills</p>
+                        <div class="portfolio-grid">
+                            <div class="portfolio-item add" onclick="showToast('Portfolio upload coming soon!', 'success')">
+                                + Add
+                            </div>
+                            <div class="portfolio-item" style="background: var(--accent);">🍲</div>
+                            <div class="portfolio-item" style="background: var(--accent);">🎨</div>
+                            <div class="portfolio-item" style="background: var(--accent);">✨</div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Orders -->
+                    <div class="card">
+                        <h2 class="card-title">Recent Orders</h2>
+                        <div class="order-card">
+                            <div class="order-info">
+                                <h4>Tiffin Order - Vegetarian</h4>
+                                <div class="order-meta">Customer: Neha Sharma �� Jan 25, 2024 • ₹450</div>
+                            </div>
+                            <div class="order-status status-completed">Completed</div>
+                        </div>
+                        <div class="order-card">
+                            <div class="order-info">
+                                <h4>Party Catering - 50 people</h4>
+                                <div class="order-meta">Customer: Riya Patel • Jan 28, 2024 • ₹8,000</div>
+                            </div>
+                            <div class="order-status status-pending">In Progress</div>
+                        </div>
+                        <div class="order-card">
+                            <div class="order-info">
+                                <h4>Weekly Tiffin Service</h4>
+                                <div class="order-meta">Customer: Anjali Reddy • Jan 30, 2024 • ₹2,800</div>
+                            </div>
+                            <div class="order-status status-pending">Pending</div>
+                        </div>
+                    </div>
+
+                    <!-- Profile Info -->
+                    <div style="margin-top: 2rem;">
+                        <h2 style="color: var(--primary); margin-bottom: 1.5rem; font-size: 2rem;">Business Profile</h2>
+                        <div class="grid grid-2">
+                            <div class="card">
+                                <h3 class="card-title">Business Details</h3>
+                                <p style="margin-bottom: 0.5rem;"><strong>Business Name:</strong> ${currentUser.business_name || 'Not set'}</p>
+                                <p style="margin-bottom: 0.5rem;"><strong>Owner:</strong> ${currentUser.name}</p>
+                                <p style="margin-bottom: 0.5rem;"><strong>Location:</strong> ${currentUser.business_location || 'Not set'}</p>
+                                <p style="margin-bottom: 0.5rem;"><strong>Experience:</strong> ${currentUser.business_experience || 0} years</p>
+                                <p style="margin-bottom: 0.5rem;"><strong>Categories:</strong> ${currentUser.business_categories || 'Not set'}</p>
+                            </div>
+                            <div class="card">
+                                <h3 class="card-title">Contact Information</h3>
+                                <p style="margin-bottom: 0.5rem;"><strong>Email:</strong> ${currentUser.email}</p>
+                                <p style="margin-bottom: 0.5rem;"><strong>Phone:</strong> ${currentUser.phone}</p>
+                                <p style="margin-bottom: 0.5rem;"><strong>Social:</strong> ${currentUser.social_handle || 'Not set'}</p>
+                                <p style="margin-bottom: 0.5rem;"><strong>Member Since:</strong> ${new Date(currentUser.created_at).toLocaleDateString()}</p>
+                                <button class="btn" style="margin-top: 1rem; width: 100%;">Edit Profile</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else {
+                // Customer Dashboard
+                dashboard.innerHTML = `
+                    <!-- Activity Overview -->
+                    <div class="card" style="margin-bottom: 2rem;">
+                        <h2 class="card-title">My Activity</h2>
+                        <div class="stat-grid">
+                            <div class="stat-box">
+                                <div class="stat-value">12</div>
+                                <div class="stat-label">Total Orders</div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-value">8</div>
+                                <div class="stat-label">Saved Services</div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-value">5</div>
+                                <div class="stat-label">Reviews Given</div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-value">₹15,250</div>
+                                <div class="stat-label">Total Spent</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Order History -->
+                    <div class="card" style="margin-bottom: 2rem;">
+                        <h2 class="card-title">Order History</h2>
+                        ${sampleOrders.map(order => `
+                            <div class="order-card">
+                                <div class="order-info">
+                                    <h4>${order.service}</h4>
+                                    <div class="order-meta">Order #${order.id} • ${new Date(order.date).toLocaleDateString()} • ₹${order.amount}</div>
+                                </div>
+                                <div class="order-status status-${order.status}">${order.status.charAt(0).toUpperCase() + order.status.slice(1)}</div>
+                            </div>
+                        `).join('')}
+                        <button class="btn btn-outline" style="margin-top: 1rem; width: 100%;">View All Orders</button>
+                    </div>
+
+                    <!-- Saved Services -->
+                    <div class="card" style="margin-bottom: 2rem;">
+                        <h2 class="card-title">Saved Services</h2>
+                        <div class="grid grid-3">
+                            <div style="text-align: center; padding: 1rem; background: var(--input-bg); border-radius: 12px;">
+                                <div style="font-size: 2rem; margin-bottom: 0.5rem;">🍲</div>
+                                <strong style="color: var(--primary);">Priya's Kitchen</strong>
+                                <p style="color: var(--subtle); font-size: 0.9rem;">Food Services</p>
+                            </div>
+                            <div style="text-align: center; padding: 1rem; background: var(--input-bg); border-radius: 12px;">
+                                <div style="font-size: 2rem; margin-bottom: 0.5rem;">💄</div>
+                                <strong style="color: var(--primary);">Anjali Beauty</strong>
+                                <p style="color: var(--subtle); font-size: 0.9rem;">Beauty & Wellness</p>
+                            </div>
+                            <div style="text-align: center; padding: 1rem; background: var(--input-bg); border-radius: 12px;">
+                                <div style="font-size: 2rem; margin-bottom: 0.5rem;">✂️</div>
+                                <strong style="color: var(--primary);">Meera's Tailoring</strong>
+                                <p style="color: var(--subtle); font-size: 0.9rem;">Tailoring</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Profile Info -->
+                    <div class="grid grid-2">
+                        <div class="card">
+                            <h3 class="card-title">Personal Information</h3>
+                            <p style="margin-bottom: 0.5rem;"><strong>Name:</strong> ${currentUser.name}</p>
+                            <p style="margin-bottom: 0.5rem;"><strong>Email:</strong> ${currentUser.email}</p>
+                            <p style="margin-bottom: 0.5rem;"><strong>Phone:</strong> ${currentUser.phone}</p>
+                            <p style="margin-bottom: 0.5rem;"><strong>Address:</strong> ${currentUser.address || 'Not set'}</p>
+                            <p style="margin-bottom: 0.5rem;"><strong>Member Since:</strong> ${new Date(currentUser.created_at).toLocaleDateString()}</p>
+                            <button class="btn" style="margin-top: 1rem; width: 100%;">Edit Profile</button>
+                        </div>
+                        <div class="card">
+                            <h3 class="card-title">Quick Actions</h3>
+                            <div style="display: flex; flex-direction: column; gap: 1rem;">
+                                <button class="btn" onclick="showSection('services')">Browse Services</button>
+                                <button class="btn" onclick="showSection('community')">Visit Community</button>
+                                <button class="btn btn-outline" onclick="showSection('help')">Get Help</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        // Footer Functions
+        function showContactUsModal() {
+            document.getElementById('contactModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function handleContactForm(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('contactName').value;
+            const email = document.getElementById('contactEmail').value;
+            const message = document.getElementById('contactMessage').value;
+
+            showToast('Sending your message...');
+            
+            setTimeout(() => {
+                showToast('Message sent successfully! We\'ll respond within 24 hours.', 'success');
+                closeModal('contactModal');
+                document.getElementById('contactForm').reset();
+            }, 1000);
+        }
+
+        function showSuccessStoriesPage() {
+            showSection('success-stories');
+        }
+
+        function showHowItWorks() {
+            showSection('how-it-works');
+        }
+
+        function showSafetyGuidelines() {
+            showSection('safety-guidelines');
+        }
+
+        function showPrivacyPolicy() {
+            showSection('privacy-policy');
+        }
+
+        function showTermsOfService() {
+            showSection('terms-of-service');
+        }
+
+        // Community Functions
+        function showForumPage() {
+            showToast('Opening Community Forum...', 'success');
+            setTimeout(() => {
+                showToast('Forum feature coming soon! Stay tuned.', 'success');
+            }, 1000);
+        }
+
+        function showMentorshipPage() {
+            showToast('Loading Mentorship Program...', 'success');
+            setTimeout(() => {
+                showToast('Mentorship matching coming soon!', 'success');
+            }, 1000);
+        }
+
+        function showResourceLibrary() {
+            showToast('Opening Resource Library...', 'success');
+            setTimeout(() => {
+                showToast('Resource library coming soon with guides & templates!', 'success');
+            }, 1000);
+        }
+
+        function showLoginModal() {
+            document.getElementById('loginModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function showRegisterModal() {
+            document.getElementById('registerModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+            document.body.style.overflow = '';
+        }
+
+        function closeModalOnOverlay(event, modalId) {
+            if (event.target.classList.contains('modal-overlay')) {
+                closeModal(modalId);
+            }
+        }
+
+        function switchToRegister() {
+            closeModal('loginModal');
+            showRegisterModal();
+        }
+
+        function switchToLogin() {
+            closeModal('registerModal');
+            showLoginModal();
+        }
+
+        function showToast(message, type = 'default') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = `toast show ${type}`;
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        async function handleRegister(event) {
+            event.preventDefault();
+            
+            const userType = document.querySelector('input[name="userType"]:checked').value;
+            const name = document.getElementById('registerName').value.trim();
+            const email = document.getElementById('registerEmail').value.trim();
+            const phone = document.getElementById('registerPhone').value.trim();
+            const password = document.getElementById('registerPassword').value;
+
+            if (!name || !email || !phone || !password) {
+                showToast('Please fill all required fields', 'error');
+                return;
+            }
+
+            showToast('Creating your account...');
+
+            const newUser = {
+                name: name,
+                email: email,
+                phone: phone,
+                password: password,
+                user_type: userType,
+                created_at: new Date().toISOString()
+            };
+
+            if (userType === 'customer') {
+                newUser.address = document.getElementById('customerAddress').value.trim();
+            } else {
+                newUser.business_name = document.getElementById('businessName').value.trim();
+                newUser.business_about = document.getElementById('businessAbout').value.trim();
+                newUser.business_location = document.getElementById('businessLocation').value.trim();
+                newUser.business_experience = document.getElementById('businessExperience').value;
+                
+                const categories = [];
+                document.querySelectorAll('input[name="categories"]:checked').forEach(cb => {
+                    categories.push(cb.value);
+                });
+                newUser.business_categories = categories.join(',');
+                
+                if (document.getElementById('categoryOther').checked) {
+                    newUser.other_category = document.getElementById('otherCategoryText').value.trim();
+                }
+                
+                newUser.social_handle = document.getElementById('socialHandle').value.trim();
+            }
+
+            const result = await window.dataSdk.create(newUser);
+            
+            if (result.isOk) {
+                showToast('Account created successfully!', 'success');
+                currentUser = newUser;
+                isLoggedIn = true;
+                localStorage.setItem('currentUser', JSON.stringify(newUser));
+                
+                setTimeout(() => {
+                    closeModal('registerModal');
+                    updateUIAfterLogin();
+                    showSection('home');
+                }, 1000);
+            } else {
+                showToast('Registration failed. Please try again.', 'error');
+            }
+        }
+
+        async function handleLogin(event) {
+            event.preventDefault();
+            
+            const email = document.getElementById('loginEmail').value.trim();
+            const password = document.getElementById('loginPassword').value;
+
+            if (!email || !password) {
+                showToast('Please fill all fields', 'error');
+                return;
+            }
+
+            showToast('Logging in...');
+
+            setTimeout(() => {
+                currentUser = {
+                    name: getNameFromEmail(email),
+                    email: email,
+                    phone: '+91 98765 43210',
+                    user_type: 'customer',
+                    created_at: new Date().toISOString(),
+                    address: 'Mumbai, Maharashtra'
+                };
+                isLoggedIn = true;
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                
+                showToast('Welcome back!', 'success');
+                closeModal('loginModal');
+                updateUIAfterLogin();
+            }, 700);
+        }
+
+        function logout() {
+            currentUser = null;
+            isLoggedIn = false;
+            localStorage.removeItem('currentUser');
+            
+            document.getElementById('authButtons').style.display = 'flex';
+            document.getElementById('profileIcon').style.display = 'none';
+            document.getElementById('profileDropdown').classList.remove('show');
+            
+            showToast('Logged out successfully', 'success');
+            showSection('home');
+        }
+
+        function updateUIAfterLogin() {
+            document.getElementById('authButtons').style.display = 'none';
+            document.getElementById('profileIcon').style.display = 'flex';
+            
+            document.getElementById('profileName').textContent = currentUser.name;
+            document.getElementById('profileEmail').textContent = currentUser.email;
+        }
+
+        function toggleProfileDropdown() {
+            document.getElementById('profileDropdown').classList.toggle('show');
+        }
+
+        document.addEventListener('click', function(event) {
+            const profileIcon = document.getElementById('profileIcon');
+            const profileDropdown = document.getElementById('profileDropdown');
+            
+            if (!profileIcon.contains(event.target) && !profileDropdown.contains(event.target)) {
+                profileDropdown.classList.remove('show');
+            }
+        });
+
+        function getNameFromEmail(email) {
+            if (!email) return '';
+            let name = email.split('@')[0].replace(/[._]/g, " ");
+            return name.replace(/\b\w/g, l => l.toUpperCase());
+        }
+
+        function openChatbot() {
+            const menu = document.getElementById('aiMenu');
+            menu.classList.toggle('show');
+        }
+
+        document.addEventListener('click', function(event) {
+            const aiMenu = document.getElementById('aiMenu');
+            const aiButton = event.target.closest('.profile-icon[onclick="openChatbot()"]');
+            
+            if (!aiButton && !aiMenu.contains(event.target)) {
+                aiMenu.classList.remove('show');
+            }
+        });
+
+        function openChatbotAssistant() {
+            document.getElementById('aiMenu').classList.remove('show');
+            document.getElementById('chatbotContainer').classList.add('show');
+            document.getElementById('chatbotInput').focus();
+        }
+
+        function closeChatbot() {
+            document.getElementById('chatbotContainer').classList.remove('show');
+        }
+
+        function handleChatEnter(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        async function sendMessage() {
+            const input = document.getElementById('chatbotInput');
+            const message = input.value.trim();
+            
+            if (!message) return;
+
+            addChatMessage(message, 'user');
+            input.value = '';
+
+            const sendBtn = document.getElementById('chatbotSendBtn');
+            sendBtn.disabled = true;
+
+            showTypingIndicator();
+
+            setTimeout(() => {
+                hideTypingIndicator();
+                const response = getAIResponse(message.toLowerCase());
+                addChatMessage(response, 'bot');
+                sendBtn.disabled = false;
+            }, 1000 + Math.random() * 1000);
+        }
+
+        function addChatMessage(text, sender) {
+            const messagesContainer = document.getElementById('chatbotMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `chat-message ${sender}`;
+            
+            const avatar = document.createElement('div');
+            avatar.className = `message-avatar ${sender}`;
+            avatar.textContent = sender === 'bot' ? '���' : '👤';
+            
+            const bubble = document.createElement('div');
+            bubble.className = 'message-bubble';
+            bubble.textContent = text;
+            
+            messageDiv.appendChild(avatar);
+            messageDiv.appendChild(bubble);
+            messagesContainer.appendChild(messageDiv);
+            
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function showTypingIndicator() {
+            const messagesContainer = document.getElementById('chatbotMessages');
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'chat-message bot';
+            typingDiv.id = 'typingIndicator';
+            
+            typingDiv.innerHTML = `
+                <div class="message-avatar bot">🤖</div>
+                <div class="message-bubble">
+                    <div class="typing-indicator">
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                    </div>
+                </div>
+            `;
+            
+            messagesContainer.appendChild(typingDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function hideTypingIndicator() {
+            const indicator = document.getElementById('typingIndicator');
+            if (indicator) {
+                indicator.remove();
+            }
+        }
+
+        function showHelpCenterFromChat() {
+            const messagesContainer = document.getElementById('chatbotMessages');
+            messagesContainer.innerHTML = `
+                <div style="padding: 1rem;">
+                    <button class="btn btn-outline btn-small" onclick="backToChatFromHelp()" style="margin-bottom: 1.5rem;">
+                        ← Back to Chat
+                    </button>
+                    
+                    <h2 style="color: var(--primary); text-align: center; margin-bottom: 1rem; font-size: 1.5rem;">Help Center</h2>
+                    <p style="text-align: center; color: var(--subtle); margin-bottom: 2rem; font-size: 0.9rem;">Quick access support for all your questions</p>
+
+                    <div style="display: grid; gap: 1rem; margin-bottom: 2rem;">
+                        <div class="card" style="text-align: center; padding: 1.5rem;">
+                            <div style="font-size: 2rem; margin-bottom: 0.5rem;">📞</div>
+                            <h3 style="color: var(--primary); font-size: 1.1rem; margin-bottom: 0.5rem;">Call Us</h3>
+                            <p style="color: var(--primary); font-size: 1.1rem; font-weight: 600; margin-bottom: 0.3rem;">1800-123-4567</p>
+                            <p style="color: var(--subtle); font-size: 0.8rem;">Mon-Sat, 9 AM - 8 PM</p>
+                        </div>
+
+                        <div class="card" style="text-align: center; padding: 1.5rem;">
+                            <div style="font-size: 2rem; margin-bottom: 0.5rem;">✉️</div>
+                            <h3 style="color: var(--primary); font-size: 1.1rem; margin-bottom: 0.5rem;">Email Support</h3>
+                            <p style="color: var(--primary); font-size: 0.95rem; font-weight: 600; margin-bottom: 0.3rem;">support@homepreneurbub.com</p>
+                            <p style="color: var(--subtle); font-size: 0.8rem;">Response within 24 hours</p>
+                        </div>
+
+                        <div class="card" style="text-align: center; padding: 1.5rem;">
+                            <div style="font-size: 2rem; margin-bottom: 0.5rem;">💬</div>
+                            <h3 style="color: var(--primary); font-size: 1.1rem; margin-bottom: 0.5rem;">Continue Chat</h3>
+                            <p style="color: var(--subtle); font-size: 0.85rem; margin-bottom: 0.8rem;">Return to AI assistant</p>
+                            <button class="btn btn-small" onclick="backToChatFromHelp()" style="width: 100%;">Back to Chat</button>
+                        </div>
+                    </div>
+
+                    <h3 style="color: var(--primary); margin-bottom: 1rem; font-size: 1.2rem;">Quick FAQs</h3>
+                    <div style="display: grid; gap: 0.8rem;">
+                        <div style="background: var(--card-bg); padding: 1rem; border-radius: 8px; border: 1px solid var(--input-border);">
+                            <h4 style="color: var(--primary); margin-bottom: 0.3rem; font-size: 0.95rem;">How do I register?</h4>
+                            <p style="color: var(--text); font-size: 0.85rem;">Click 'Sign Up', select your type, and fill in details.</p>
+                        </div>
+                        <div style="background: var(--card-bg); padding: 1rem; border-radius: 8px; border: 1px solid var(--input-border);">
+                            <h4 style="color: var(--primary); margin-bottom: 0.3rem; font-size: 0.95rem;">Any registration fee?</h4>
+                            <p style="color: var(--text); font-size: 0.85rem;">No! Registration is completely free.</p>
+                        </div>
+                        <div style="background: var(--card-bg); padding: 1rem; border-radius: 8px; border: 1px solid var(--input-border);">
+                            <h4 style="color: var(--primary); margin-bottom: 0.3rem; font-size: 0.95rem;">How do payments work?</h4>
+                            <p style="color: var(--text); font-size: 0.85rem;">Secure processing, direct bank transfers.</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function backToChatFromHelp() {
+            const messagesContainer = document.getElementById('chatbotMessages');
+            messagesContainer.innerHTML = `
+                <div class="chat-message bot">
+                    <div class="message-avatar bot">🤖</div>
+                    <div class="message-bubble">
+                        Hi! I'm your AI assistant for Homepreneur Hub. I can help you find services, answer questions about our platform, or guide you through registration. What can I help you with today?
+                    </div>
+                </div>
+            `;
+            messagesContainer.scrollTop = 0;
+        }
+
+        function getAIResponse(message) {
+            if (message.includes('hello') || message.includes('hi') || message.includes('hey')) {
+                return "Hello! Welcome to Homepreneur Hub. How can I assist you today?";
+            }
+            
+            if (message.includes('food') || message.includes('tiffin') || message.includes('catering')) {
+                return "Great! We have amazing food service providers. You can find homemade tiffin services, catering for events, and baked goods. Would you like me to show you our top-rated food service providers in your area?";
+            }
+            
+            if (message.includes('beauty') || message.includes('makeup') || message.includes('salon')) {
+                return "We have talented beauty professionals including makeup artists, mehendi artists, and skincare specialists. Many offer at-home services! Would you like to explore our beauty services section?";
+            }
+            
+            if (message.includes('register') || message.includes('sign up') || message.includes('join')) {
+                return "Registration is easy! Just click the 'Sign Up' button at the top. You can register as a Customer to book services or as a Service Owner to offer your services. It only takes a minute!";
+            }
+            
+            if (message.includes('price') || message.includes('cost') || message.includes('fee')) {
+                return "Prices vary by service provider and location. Each provider sets their own rates. You can view pricing details on their profiles. Would you like to check out specific services?";
+            }
+            
+            if (message.includes('help') || message.includes('support') || message.includes('contact')) {
+                return "I can show you our Help Center with contact options! Click the 🆘 button at the top of this chat to see phone, email, and FAQs. Or I can answer your questions right here!";
+            }
+
+            if (message.includes('thank') || message.includes('thanks')) {
+                return "You're welcome! I'm here anytime you need help. Feel free to ask anything about our services or platform. 😊";
+            }
+
+            return "I'm here to help! I can assist you with finding services, learning about our platform, registration, pricing, and more. Could you tell me more specifically what you're looking for?";
+        }
+
+        // Category subcategories data
+        const categoryData = {
+            food: {
+                icon: '🍲',
+                title: 'Food Services',
+                description: 'Delicious homemade meals, catering, and baked goods prepared with love',
+                subcategories: [
+                    { icon: '🥗', title: 'Vegetarian', desc: 'Pure veg homemade meals and tiffins' },
+                    { icon: '🍖', title: 'Non-Vegetarian', desc: 'Chicken, mutton, fish preparations' },
+                    { icon: '🎉', title: 'Party & Catering', desc: 'Event catering and party orders' },
+                    { icon: '🍰', title: 'Home Baking', desc: 'Cakes, cookies, pastries & desserts' },
+                    { icon: '🍛', title: 'Regional Cuisine', desc: 'North Indian, South Indian, Chinese' },
+                    { icon: '🥘', title: 'Special Diets', desc: 'Keto, diabetic-friendly, weight loss meals' }
+                ]
+            },
+            beauty: {
+                icon: '����',
+                title: 'Beauty & Wellness',
+                description: 'Professional beauty services and self-care treatments at your doorstep',
+                subcategories: [
+                    { icon: '💅', title: 'Hair & Makeup', desc: 'Bridal, party & everyday makeup' },
+                    { icon: '✨', title: 'Facial & Skincare', desc: 'Facials, cleanup, skincare consultation' },
+                    { icon: '🧖‍♀️', title: 'Spa & Massage', desc: 'Relaxation and wellness therapies' },
+                    { icon: '🎨', title: 'Mehendi Art', desc: 'Bridal and traditional henna designs' },
+                    { icon: '���‍♀️', title: 'Hair Care', desc: 'Hair spa, treatments, styling' },
+                    { icon: '🌿', title: 'Natural & Organic', desc: 'Herbal and natural beauty treatments' }
+                ]
+            },
+            tailoring: {
+                icon: '✂️',
+                title: 'Tailoring & Fashion',
+                description: 'Expert tailoring, custom outfits, and fashion design services',
+                subcategories: [
+                    { icon: '👗', title: 'Custom Wear', desc: 'Saree blouses, suits, lehengas' },
+                    { icon: '🔧', title: 'Alterations', desc: 'Fitting adjustments and repairs' },
+                    { icon: '🧵', title: 'Embroidery', desc: 'Hand & machine embroidery work' },
+                    { icon: '🎀', title: 'Materials & Fabric', desc: 'Premium fabrics and materials' },
+                    { icon: '🧶', title: 'Crochet & Knitting', desc: 'Handmade crochet and knitted items' },
+                    { icon: '👔', title: 'Men\'s Tailoring', desc: 'Shirts, pants, and ethnic wear' }
+                ]
+            },
+            education: {
+                icon: '📚',
+                title: 'Education & Tutoring',
+                description: 'Quality education, tutoring, and skill development courses',
+                subcategories: [
+                    { icon: '📐', title: 'School Subjects', desc: 'Maths, Science, English, Social Studies' },
+                    { icon: '🎓', title: 'Undergraduate', desc: 'College level subjects and coaching' },
+                    { icon: '🗣️', title: 'Languages', desc: 'English, Hindi, foreign languages' },
+                    { icon: '🎵', title: 'Music Classes', desc: 'Vocal, instrumental, classical music' },
+                    { icon: '🎨', title: 'Art & Drawing', desc: 'Painting, sketching, craft classes' },
+                    { icon: '💻', title: 'Computer Skills', desc: 'Coding, MS Office, digital skills' }
+                ]
+            },
+            crafts: {
+                icon: '🎨',
+                title: 'Crafts & Handmade',
+                description: 'Unique handmade items, personalized gifts, and creative crafts',
+                subcategories: [
+                    { icon: '💍', title: 'Handmade Jewelry', desc: 'Custom earrings, necklaces, accessories' },
+                    { icon: '🏠', title: 'Home Decor', desc: 'Wall art, decorative items, rangoli' },
+                    { icon: '🎁', title: 'Customized Gifts', desc: 'Personalized and unique gift items' },
+                    { icon: '🧶', title: 'Crochet Items', desc: 'Crochet bags, clothes, toys' },
+                    { icon: '🖼️', title: 'Paper Crafts', desc: 'Cards, scrapbooks, paper flowers' },
+                    { icon: '🕯️', title: 'Candles & Soaps', desc: 'Handmade candles and organic soaps' }
+                ]
+            }
+        };
+
+        function showCategoryDetail(categoryKey) {
+            const category = categoryData[categoryKey];
+            if (!category) return;
+
+            const content = document.getElementById('categoryDetailContent');
+            content.innerHTML = `
+                <div style="text-align: center; margin-bottom: 3rem;">
+                    <div style="font-size: 5rem; margin-bottom: 1rem;">${category.icon}</div>
+                    <h1 style="color: var(--primary); font-size: 2.5rem; margin-bottom: 0.5rem;">${category.title}</h1>
+                    <p style="color: var(--subtle); font-size: 1.2rem;">${category.description}</p>
+                </div>
+
+                <h2 style="color: var(--primary); margin-bottom: 2rem; font-size: 2rem;">Browse Subcategories</h2>
+                <div class="grid grid-3">
+                    ${category.subcategories.map(sub => `
+                        <div class="card" style="cursor: pointer; text-align: center;" onclick="showToast('Showing providers for ${sub.title}...', 'success')">
+                            <div style="font-size: 3rem; margin-bottom: 1rem;">${sub.icon}</div>
+                            <h3 class="card-title">${sub.title}</h3>
+                            <p class="card-content">${sub.desc}</p>
+                            <button class="btn" style="margin-top: 1rem; width: 100%;">View Providers</button>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+
+            showSection('category-detail');
+        }
+
+        // Smart Search Functions
+        function openSmartSearch() {
+            document.getElementById('aiMenu').classList.remove('show');
+            document.getElementById('chatbotContainer').classList.remove('show');
+            document.getElementById('smartSearchContainer').style.display = 'flex';
+            document.getElementById('smartSearchInput').focus();
+            document.getElementById('searchResults').style.display = 'none';
+            document.getElementById('smartSearchInput').value = '';
+        }
+
+        function closeSmartSearch() {
+            document.getElementById('smartSearchContainer').style.display = 'none';
+        }
+
+        function performSmartSearch() {
+            const searchInput = document.getElementById('smartSearchInput').value.trim();
+            
+            if (!searchInput) {
+                showToast('Please describe what you are looking for', 'error');
+                return;
+            }
+
+            const searchBtn = document.getElementById('searchBtn');
+            searchBtn.disabled = true;
+            searchBtn.innerHTML = '🔄 Analyzing...';
+
+            setTimeout(() => {
+                const results = analyzeSearchQuery(searchInput);
+                displaySearchResults(results);
+                searchBtn.disabled = false;
+                searchBtn.innerHTML = '🔍 Search with AI';
+            }, 1500);
+        }
+
+        function analyzeSearchQuery(query) {
+            const lowerQuery = query.toLowerCase();
+            let matchedServices = [];
+
+            // Sample service providers with quality scores
+            const serviceProviders = [
+                { 
+                    name: "Priya's Kitchen", 
+                    category: 'food', 
+                    subcategory: 'Vegetarian Tiffin',
+                    icon: '🍲',
+                    location: 'Mumbai, Andheri',
+                    rating: 4.8,
+                    orders: 250,
+                    description: 'Fresh homemade vegetarian meals with authentic taste',
+                    price: '₹120-180/meal',
+                    keywords: ['food', 'tiffin', 'vegetarian', 'veg', 'meal', 'lunch', 'dinner', 'homemade', 'mumbai']
+                },
+                { 
+                    name: "Anjali's Beauty Studio", 
+                    category: 'beauty', 
+                    subcategory: 'Bridal Makeup',
+                    icon: '��',
+                    location: 'Bangalore, Koramangala',
+                    rating: 4.9,
+                    orders: 180,
+                    description: 'Professional bridal and party makeup artist',
+                    price: '₹8,000-15,000',
+                    keywords: ['beauty', 'makeup', 'bridal', 'wedding', 'party', 'mehendi', 'bangalore']
+                },
+                { 
+                    name: "Meera's Tailoring", 
+                    category: 'tailoring', 
+                    subcategory: 'Custom Blouses',
+                    icon: '✂️',
+                    location: 'Pune, Shivaji Nagar',
+                    rating: 4.7,
+                    orders: 320,
+                    description: 'Expert in saree blouses and custom stitching',
+                    price: '₹500-1,200',
+                    keywords: ['tailoring', 'blouse', 'saree', 'stitching', 'alteration', 'custom', 'pune']
+                },
+                { 
+                    name: "Lakshmi's Home Tuitions", 
+                    category: 'education', 
+                    subcategory: 'School Tutoring',
+                    icon: '📚',
+                    location: 'Chennai, T Nagar',
+                    rating: 4.6,
+                    orders: 95,
+                    description: 'Maths and Science tutor for grades 5-10',
+                    price: '₹3,000-5,000/month',
+                    keywords: ['tuition', 'tutoring', 'education', 'maths', 'science', 'school', 'study', 'chennai']
+                },
+                { 
+                    name: "Radha's Craft Corner", 
+                    category: 'crafts', 
+                    subcategory: 'Handmade Jewelry',
+                    icon: '🎨',
+                    location: 'Delhi, Lajpat Nagar',
+                    rating: 4.5,
+                    orders: 210,
+                    description: 'Beautiful handmade earrings and necklaces',
+                    price: '₹200-2,000',
+                    keywords: ['craft', 'handmade', 'jewelry', 'earring', 'necklace', 'gift', 'delhi']
+                },
+                { 
+                    name: "Sunita's Party Catering", 
+                    category: 'food', 
+                    subcategory: 'Event Catering',
+                    icon: '🎉',
+                    location: 'Mumbai, Bandra',
+                    rating: 4.9,
+                    orders: 140,
+                    description: 'Catering for parties, events, and celebrations',
+                    price: '₹300-500/plate',
+                    keywords: ['catering', 'party', 'event', 'food', 'celebration', 'wedding', 'mumbai']
+                }
+            ];
+
+            // Match services based on keywords
+            serviceProviders.forEach(service => {
+                let matchScore = 0;
+                service.keywords.forEach(keyword => {
+                    if (lowerQuery.includes(keyword)) {
+                        matchScore += 15;
+                    }
+                });
+
+                // Boost score based on ratings and orders
+                matchScore += service.rating * 5;
+                matchScore += Math.min(service.orders / 10, 20);
+
+                if (matchScore > 20) {
+                    matchedServices.push({
+                        ...service,
+                        matchScore: matchScore,
+                        qualityPrediction: Math.min(Math.round(matchScore), 98)
+                    });
+                }
+            });
+
+            // Sort by match score
+            matchedServices.sort((a, b) => b.matchScore - a.matchScore);
+
+            return matchedServices.slice(0, 4);
+        }
+
+        function displaySearchResults(results) {
+            const resultsDiv = document.getElementById('searchResults');
+            
+            if (results.length === 0) {
+                resultsDiv.innerHTML = `
+                    <div style="text-align: center; padding: 2rem; background: var(--card-bg); border-radius: 12px;">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">😔</div>
+                        <h3 style="color: var(--primary); margin-bottom: 0.5rem;">No matches found</h3>
+                        <p style="color: var(--subtle);">Try describing your requirement differently</p>
+                    </div>
+                `;
+                resultsDiv.style.display = 'block';
+                return;
+            }
+
+            resultsDiv.innerHTML = `
+                <h3 style="color: var(--primary); margin-bottom: 1rem; font-size: 1.1rem;">
+                    🎯 Found ${results.length} Perfect Match${results.length > 1 ? 'es' : ''}
+                </h3>
+                ${results.map((service, index) => `
+                    <div class="card" style="margin-bottom: 1rem; padding: 1.2rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.8rem;">
+                            <div style="display: flex; gap: 0.8rem; align-items: center; flex: 1;">
+                                <div style="font-size: 2rem;">${service.icon}</div>
+                                <div style="flex: 1;">
+                                    <h4 style="color: var(--primary); margin-bottom: 0.2rem; font-size: 1rem;">${service.name}</h4>
+                                    <p style="color: var(--subtle); font-size: 0.8rem; margin-bottom: 0.3rem;">📍 ${service.location}</p>
+                                    <p style="color: var(--text); font-size: 0.85rem;">${service.subcategory}</p>
+                                </div>
+                            </div>
+                            <div style="text-align: center; background: linear-gradient(135deg, ${service.qualityPrediction >= 90 ? '#7a9b5f' : service.qualityPrediction >= 75 ? '#d4a574' : '#c49a6c'} 0%, ${service.qualityPrediction >= 90 ? '#5f7a47' : service.qualityPrediction >= 75 ? '#c49a6c' : '#b88a5e'} 100%); color: white; padding: 0.5rem 0.8rem; border-radius: 12px; min-width: 70px;">
+                                <div style="font-size: 1.3rem; font-weight: 700; line-height: 1;">${service.qualityPrediction}%</div>
+                                <div style="font-size: 0.65rem; opacity: 0.95; margin-top: 0.1rem;">MATCH</div>
+                            </div>
+                        </div>
+                        
+                        <p style="color: var(--text); font-size: 0.85rem; margin-bottom: 0.8rem; line-height: 1.4;">${service.description}</p>
+                        
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 0.8rem; border-top: 1px solid var(--input-border);">
+                            <div style="display: flex; gap: 1rem; font-size: 0.8rem; color: var(--subtle);">
+                                <span>⭐ ${service.rating}</span>
+                                <span>📦 ${service.orders} orders</span>
+                                <span style="color: var(--primary); font-weight: 600;">${service.price}</span>
+                            </div>
+                            <button class="btn btn-small" onclick="showToast('Contacting ${service.name}...', 'success')" style="font-size: 0.8rem; padding: 0.4rem 0.8rem;">
+                                View Details
+                            </button>
+                        </div>
+                    </div>
+                `).join('')}
+                
+                <button class="btn btn-outline" onclick="openSmartSearch()" style="width: 100%; margin-top: 1rem;">
+                    🔄 New Search
+                </button>
+            `;
+            
+            resultsDiv.style.display = 'block';
+        }
+    </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a9d8013f4be84d1',t:'MTc2NTA0MjExNS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
