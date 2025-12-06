@@ -1,0 +1,662 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Popular Cuisine</title>
+  <script src="/_sdk/data_sdk.js"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <style>
+    body {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Georgia', 'Times New Roman', serif;
+      background: linear-gradient(135deg, #fef3c7 0%, #fed7aa 100%);
+      min-height: 100%;
+      width: 100%;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    .main-container {
+      width: 100%;
+      min-height: 100%;
+      padding: 40px 20px;
+    }
+
+    .page {
+      display: none;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .header h1 {
+      font-size: 48px;
+      font-weight: 700;
+      color: #78350f;
+      margin: 0 0 12px 0;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .header p {
+      font-size: 20px;
+      color: #92400e;
+      margin: 0;
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: white;
+      color: #78350f;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-bottom: 24px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      font-family: inherit;
+    }
+
+    .back-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+    }
+
+    .cuisine-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 32px;
+      padding: 0 20px;
+    }
+
+    .cuisine-card {
+      background: white;
+      border-radius: 20px;
+      padding: 32px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+      transition: all 0.3s ease;
+      cursor: pointer;
+      text-align: center;
+      border: 3px solid transparent;
+    }
+
+    .cuisine-card:hover {
+      transform: translateY(-12px);
+      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.18);
+      border-color: #ea580c;
+    }
+
+    .cuisine-icon {
+      font-size: 64px;
+      margin-bottom: 20px;
+    }
+
+    .cuisine-title {
+      font-size: 28px;
+      font-weight: 700;
+      color: #78350f;
+      margin: 0 0 12px 0;
+    }
+
+    .cuisine-description {
+      font-size: 16px;
+      color: #92400e;
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    .food-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+    }
+
+    .food-card {
+      background: white;
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      border-left: 6px solid #ea580c;
+      transition: all 0.3s ease;
+    }
+
+    .food-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .food-name {
+      font-size: 24px;
+      font-weight: 700;
+      color: #78350f;
+      margin: 0 0 12px 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .food-description {
+      font-size: 14px;
+      color: #92400e;
+      margin: 0 0 16px 0;
+      line-height: 1.6;
+    }
+
+    .nutrition-btn {
+      width: 100%;
+      padding: 12px;
+      background: #ea580c;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: inherit;
+    }
+
+    .nutrition-btn:hover:not(:disabled) {
+      background: #c2410c;
+      transform: translateY(-2px);
+    }
+
+    .nutrition-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .nutrition-info {
+      margin-top: 16px;
+      padding: 16px;
+      background: #fef3c7;
+      border-radius: 10px;
+      border: 2px solid #fed7aa;
+      display: none;
+    }
+
+    .nutrition-info.show {
+      display: block;
+    }
+
+    .nutrition-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid #fed7aa;
+    }
+
+    .nutrition-row:last-child {
+      border-bottom: none;
+    }
+
+    .nutrition-label {
+      font-weight: 600;
+      color: #78350f;
+    }
+
+    .nutrition-value {
+      color: #92400e;
+    }
+
+    .loading-spinner {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top-color: white;
+      animation: spin 0.8s linear infinite;
+      margin-left: 8px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .error-message {
+      color: #c2410c;
+      font-size: 14px;
+      margin-top: 8px;
+      padding: 8px;
+      background: #fed7aa;
+      border-radius: 6px;
+      display: none;
+    }
+
+    .error-message.show {
+      display: block;
+    }
+
+    .toast {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #15803d;
+      color: white;
+      padding: 16px 32px;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+      z-index: 1000;
+      font-weight: 600;
+      display: none;
+    }
+
+    .toast.show {
+      display: block;
+      animation: slideDown 0.3s ease;
+    }
+
+    @keyframes slideDown {
+      from {
+        transform: translateX(-50%) translateY(-100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(-50%) translateY(0);
+        opacity: 1;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .header h1 {
+        font-size: 36px;
+      }
+
+      .cuisine-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .food-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+ </head>
+ <body>
+  <div class="main-container">
+   <div id="toast" class="toast"></div><!-- Home Page -->
+   <div id="home-page" class="page active">
+    <div class="header">
+     <h1 id="home-title">🍛 Popular Cuisine</h1>
+     <p id="home-subtitle">Explore authentic regional flavors of India</p>
+    </div>
+    <div class="cuisine-grid">
+     <div class="cuisine-card" onclick="showCuisine('north-indian')">
+      <div class="cuisine-icon">
+       🍛
+      </div>
+      <h2 class="cuisine-title" id="north-indian-title">North Indian</h2>
+      <p class="cuisine-description">Rich, creamy curries with aromatic spices</p>
+     </div>
+     <div class="cuisine-card" onclick="showCuisine('south-indian')">
+      <div class="cuisine-icon">
+       🥥
+      </div>
+      <h2 class="cuisine-title" id="south-indian-title">South Indian</h2>
+      <p class="cuisine-description">Rice-based dishes with coconut and tamarind</p>
+     </div>
+     <div class="cuisine-card" onclick="showCuisine('bengali')">
+      <div class="cuisine-icon">
+       🐟
+      </div>
+      <h2 class="cuisine-title" id="bengali-title">Bengali</h2>
+      <p class="cuisine-description">Delicate fish curries and sweet delights</p>
+     </div>
+     <div class="cuisine-card" onclick="showCuisine('punjabi')">
+      <div class="cuisine-icon">
+       🫓
+      </div>
+      <h2 class="cuisine-title" id="punjabi-title">Punjabi</h2>
+      <p class="cuisine-description">Robust flavors with tandoor specialties</p>
+     </div>
+     <div class="cuisine-card" onclick="showCuisine('gujarati')">
+      <div class="cuisine-icon">
+       🍯
+      </div>
+      <h2 class="cuisine-title" id="gujarati-title">Gujarati</h2>
+      <p class="cuisine-description">Sweet and savory vegetarian delicacies</p>
+     </div>
+    </div>
+   </div><!-- North Indian Page -->
+   <div id="north-indian-page" class="page"><button class="back-btn" onclick="showHome()"> <span>←</span> Back to Cuisines </button>
+    <div class="header">
+     <h1>🍛 North Indian Cuisine</h1>
+     <p>Rich and aromatic dishes from the northern regions</p>
+    </div>
+    <div class="food-grid" id="north-indian-grid"></div>
+   </div><!-- South Indian Page -->
+   <div id="south-indian-page" class="page"><button class="back-btn" onclick="showHome()"> <span>←</span> Back to Cuisines </button>
+    <div class="header">
+     <h1>🥥 South Indian Cuisine</h1>
+     <p>Light and flavorful dishes from the south</p>
+    </div>
+    <div class="food-grid" id="south-indian-grid"></div>
+   </div><!-- Bengali Page -->
+   <div id="bengali-page" class="page"><button class="back-btn" onclick="showHome()"> <span>←</span> Back to Cuisines </button>
+    <div class="header">
+     <h1>🐟 Bengali Cuisine</h1>
+     <p>Delicate and aromatic dishes from Bengal</p>
+    </div>
+    <div class="food-grid" id="bengali-grid"></div>
+   </div><!-- Punjabi Page -->
+   <div id="punjabi-page" class="page"><button class="back-btn" onclick="showHome()"> <span>←</span> Back to Cuisines </button>
+    <div class="header">
+     <h1>🫓 Punjabi Cuisine</h1>
+     <p>Bold and hearty dishes from Punjab</p>
+    </div>
+    <div class="food-grid" id="punjabi-grid"></div>
+   </div><!-- Gujarati Page -->
+   <div id="gujarati-page" class="page"><button class="back-btn" onclick="showHome()"> <span>←</span> Back to Cuisines </button>
+    <div class="header">
+     <h1>🍯 Gujarati Cuisine</h1>
+     <p>Sweet and savory vegetarian delights</p>
+    </div>
+    <div class="food-grid" id="gujarati-grid"></div>
+   </div>
+  </div>
+  <script>
+    const API_KEY = 'YOUR_API_KEY_HERE'; // Replace with your actual API key from api-ninjas.com
+    const API_URL = 'https://api.api-ninjas.com/v1/nutrition';
+
+    const defaultConfig = {
+      home_title: "🍛 Popular Cuisine",
+      home_subtitle: "Explore authentic regional flavors of India",
+      north_indian_title: "North Indian",
+      south_indian_title: "South Indian",
+      bengali_title: "Bengali",
+      punjabi_title: "Punjabi",
+      gujarati_title: "Gujarati",
+      primary_color: "#ea580c",
+      secondary_color: "#c2410c",
+      background_color: "#fef3c7",
+      surface_color: "#fed7aa",
+      text_color: "#78350f"
+    };
+
+    const cuisineData = {
+      'north-indian': [
+        { name: 'Butter Chicken', emoji: '🍗', description: 'Tender chicken in a rich, creamy tomato sauce', query: 'butter chicken with rice' },
+        { name: 'Palak Paneer', emoji: '🥬', description: 'Cottage cheese in a smooth spinach gravy', query: 'palak paneer with roti' },
+        { name: 'Dal Makhani', emoji: '🫘', description: 'Creamy black lentils cooked overnight', query: 'dal makhani' },
+        { name: 'Chole Bhature', emoji: '🫓', description: 'Spicy chickpea curry with fluffy fried bread', query: 'chole bhature' },
+        { name: 'Rogan Josh', emoji: '🍖', description: 'Aromatic lamb curry from Kashmir', query: 'rogan josh with rice' },
+        { name: 'Aloo Paratha', emoji: '🥔', description: 'Stuffed potato flatbread with butter', query: 'aloo paratha with butter' }
+      ],
+      'south-indian': [
+        { name: 'Masala Dosa', emoji: '🌯', description: 'Crispy rice crepe with spiced potato filling', query: 'masala dosa' },
+        { name: 'Idli Sambhar', emoji: '⚪', description: 'Steamed rice cakes with lentil stew', query: 'idli sambhar' },
+        { name: 'Hyderabadi Biryani', emoji: '🍚', description: 'Fragrant rice with tender meat and spices', query: 'chicken biryani' },
+        { name: 'Uttapam', emoji: '🥞', description: 'Thick rice pancake with vegetable toppings', query: 'uttapam' },
+        { name: 'Vada', emoji: '🍩', description: 'Crispy lentil fritters', query: 'medu vada' },
+        { name: 'Rasam', emoji: '🍲', description: 'Tangy tamarind soup with spices', query: 'rasam' }
+      ],
+      'bengali': [
+        { name: 'Machher Jhol', emoji: '🐟', description: 'Traditional Bengali fish curry', query: 'fish curry with rice' },
+        { name: 'Shorshe Ilish', emoji: '🐠', description: 'Hilsa fish in mustard sauce', query: 'hilsa fish curry' },
+        { name: 'Chingri Malai Curry', emoji: '🦐', description: 'Prawns in creamy coconut gravy', query: 'prawn curry with coconut' },
+        { name: 'Aloo Posto', emoji: '🥔', description: 'Potatoes with poppy seed paste', query: 'aloo posto' },
+        { name: 'Mishti Doi', emoji: '🍮', description: 'Sweet yogurt dessert', query: 'sweet yogurt' },
+        { name: 'Rosogolla', emoji: '⚪', description: 'Spongy cottage cheese balls in syrup', query: 'rasgulla' }
+      ],
+      'punjabi': [
+        { name: 'Tandoori Chicken', emoji: '🍗', description: 'Smoky grilled chicken with spices', query: 'tandoori chicken' },
+        { name: 'Sarson da Saag', emoji: '🥬', description: 'Mustard greens with makki di roti', query: 'sarson da saag with roti' },
+        { name: 'Amritsari Kulcha', emoji: '🫓', description: 'Stuffed bread from Amritsar', query: 'amritsari kulcha' },
+        { name: 'Rajma Chawal', emoji: '🫘', description: 'Kidney beans curry with rice', query: 'rajma chawal' },
+        { name: 'Paneer Tikka', emoji: '🧀', description: 'Grilled cottage cheese with spices', query: 'paneer tikka' },
+        { name: 'Lassi', emoji: '🥛', description: 'Traditional yogurt-based drink', query: 'lassi' }
+      ],
+      'gujarati': [
+        { name: 'Dhokla', emoji: '🟨', description: 'Steamed savory gram flour cake', query: 'dhokla' },
+        { name: 'Khandvi', emoji: '🌀', description: 'Rolled gram flour snack', query: 'khandvi' },
+        { name: 'Undhiyu', emoji: '🥘', description: 'Mixed vegetable curry', query: 'undhiyu' },
+        { name: 'Thepla', emoji: '🫓', description: 'Spiced flatbread with fenugreek', query: 'thepla' },
+        { name: 'Gujarati Kadhi', emoji: '🍲', description: 'Sweet and tangy yogurt curry', query: 'gujarati kadhi' },
+        { name: 'Shrikhand', emoji: '🍯', description: 'Sweet strained yogurt with saffron', query: 'shrikhand' }
+      ]
+    };
+
+    async function fetchNutrition(query, cardId) {
+      const btn = document.querySelector(`#${cardId} .nutrition-btn`);
+      const nutritionDiv = document.querySelector(`#${cardId} .nutrition-info`);
+      const errorDiv = document.querySelector(`#${cardId} .error-message`);
+      
+      btn.disabled = true;
+      btn.innerHTML = 'Loading<span class="loading-spinner"></span>';
+      nutritionDiv.classList.remove('show');
+      errorDiv.classList.remove('show');
+
+      try {
+        const response = await fetch(`${API_URL}?query=${encodeURIComponent(query)}`, {
+          method: 'GET',
+          headers: {
+            'X-Api-Key': API_KEY
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch nutrition data');
+        }
+
+        const data = await response.json();
+        
+        if (data && data.length > 0) {
+          const nutrition = data[0];
+          nutritionDiv.innerHTML = `
+            <div class="nutrition-row">
+              <span class="nutrition-label">Calories:</span>
+              <span class="nutrition-value">${nutrition.calories || 0} kcal</span>
+            </div>
+            <div class="nutrition-row">
+              <span class="nutrition-label">Protein:</span>
+              <span class="nutrition-value">${nutrition.protein_g || 0}g</span>
+            </div>
+            <div class="nutrition-row">
+              <span class="nutrition-label">Carbs:</span>
+              <span class="nutrition-value">${nutrition.carbohydrates_total_g || 0}g</span>
+            </div>
+            <div class="nutrition-row">
+              <span class="nutrition-label">Fat:</span>
+              <span class="nutrition-value">${nutrition.fat_total_g || 0}g</span>
+            </div>
+            <div class="nutrition-row">
+              <span class="nutrition-label">Fiber:</span>
+              <span class="nutrition-value">${nutrition.fiber_g || 0}g</span>
+            </div>
+          `;
+          nutritionDiv.classList.add('show');
+          btn.textContent = 'Order';
+        } else {
+          errorDiv.textContent = 'No nutrition data available for this dish';
+          errorDiv.classList.add('show');
+          btn.textContent = 'Order';
+        }
+      } catch (error) {
+        errorDiv.textContent = 'Unable to load nutrition info. Please check your API key and try again.';
+        errorDiv.classList.add('show');
+        btn.textContent = 'Order';
+      }
+
+      btn.disabled = false;
+    }
+
+    function renderCuisineFood(cuisine) {
+      const gridId = `${cuisine}-grid`;
+      const grid = document.getElementById(gridId);
+      const foods = cuisineData[cuisine];
+
+      grid.innerHTML = foods.map((food, index) => {
+        const cardId = `${cuisine}-card-${index}`;
+        return `
+          <div class="food-card" id="${cardId}">
+            <div class="food-name">
+              <span>${food.emoji}</span>
+              <span>${food.name}</span>
+            </div>
+            <p class="food-description">${food.description}</p>
+            <button class="nutrition-btn" onclick="fetchNutrition('${food.query}', '${cardId}')">
+              Order
+            </button>
+            <div class="error-message"></div>
+            <div class="nutrition-info"></div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function showCuisine(cuisine) {
+      document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+      document.getElementById(`${cuisine}-page`).classList.add('active');
+      renderCuisineFood(cuisine);
+      window.scrollTo(0, 0);
+    }
+
+    function showHome() {
+      document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+      document.getElementById('home-page').classList.add('active');
+      window.scrollTo(0, 0);
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3000);
+    }
+
+    async function initializeApp() {
+      if (window.elementSdk) {
+        await window.elementSdk.init({
+          defaultConfig,
+          onConfigChange: async (config) => {
+            document.getElementById('home-title').textContent = config.home_title || defaultConfig.home_title;
+            document.getElementById('home-subtitle').textContent = config.home_subtitle || defaultConfig.home_subtitle;
+            document.getElementById('north-indian-title').textContent = config.north_indian_title || defaultConfig.north_indian_title;
+            document.getElementById('south-indian-title').textContent = config.south_indian_title || defaultConfig.south_indian_title;
+            document.getElementById('bengali-title').textContent = config.bengali_title || defaultConfig.bengali_title;
+            document.getElementById('punjabi-title').textContent = config.punjabi_title || defaultConfig.punjabi_title;
+            document.getElementById('gujarati-title').textContent = config.gujarati_title || defaultConfig.gujarati_title;
+
+            const primaryColor = config.primary_color || defaultConfig.primary_color;
+            const secondaryColor = config.secondary_color || defaultConfig.secondary_color;
+            const backgroundColor = config.background_color || defaultConfig.background_color;
+            const surfaceColor = config.surface_color || defaultConfig.surface_color;
+            const textColor = config.text_color || defaultConfig.text_color;
+
+            document.body.style.background = `linear-gradient(135deg, ${backgroundColor} 0%, ${surfaceColor} 100%)`;
+            
+            const headers = document.querySelectorAll('.header h1');
+            headers.forEach(h => h.style.color = textColor);
+
+            const nutritionBtns = document.querySelectorAll('.nutrition-btn');
+            nutritionBtns.forEach(btn => {
+              btn.style.background = primaryColor;
+            });
+          },
+          mapToCapabilities: (config) => ({
+            recolorables: [
+              {
+                get: () => config.background_color || defaultConfig.background_color,
+                set: (value) => {
+                  if (window.elementSdk && window.elementSdk.config) {
+                    window.elementSdk.config.background_color = value;
+                    window.elementSdk.setConfig({ background_color: value });
+                  }
+                }
+              },
+              {
+                get: () => config.surface_color || defaultConfig.surface_color,
+                set: (value) => {
+                  if (window.elementSdk && window.elementSdk.config) {
+                    window.elementSdk.config.surface_color = value;
+                    window.elementSdk.setConfig({ surface_color: value });
+                  }
+                }
+              },
+              {
+                get: () => config.text_color || defaultConfig.text_color,
+                set: (value) => {
+                  if (window.elementSdk && window.elementSdk.config) {
+                    window.elementSdk.config.text_color = value;
+                    window.elementSdk.setConfig({ text_color: value });
+                  }
+                }
+              },
+              {
+                get: () => config.primary_color || defaultConfig.primary_color,
+                set: (value) => {
+                  if (window.elementSdk && window.elementSdk.config) {
+                    window.elementSdk.config.primary_color = value;
+                    window.elementSdk.setConfig({ primary_color: value });
+                  }
+                }
+              },
+              {
+                get: () => config.secondary_color || defaultConfig.secondary_color,
+                set: (value) => {
+                  if (window.elementSdk && window.elementSdk.config) {
+                    window.elementSdk.config.secondary_color = value;
+                    window.elementSdk.setConfig({ secondary_color: value });
+                  }
+                }
+              }
+            ],
+            borderables: [],
+            fontEditable: undefined,
+            fontSizeable: undefined
+          }),
+          mapToEditPanelValues: (config) => new Map([
+            ["home_title", config.home_title || defaultConfig.home_title],
+            ["home_subtitle", config.home_subtitle || defaultConfig.home_subtitle],
+            ["north_indian_title", config.north_indian_title || defaultConfig.north_indian_title],
+            ["south_indian_title", config.south_indian_title || defaultConfig.south_indian_title],
+            ["bengali_title", config.bengali_title || defaultConfig.bengali_title],
+            ["punjabi_title", config.punjabi_title || defaultConfig.punjabi_title],
+            ["gujarati_title", config.gujarati_title || defaultConfig.gujarati_title]
+          ])
+        });
+      }
+
+      if (window.dataSdk) {
+        const dataHandler = {
+          onDataChanged(data) {
+            // Data handler for future use
+          }
+        };
+        
+        const initResult = await window.dataSdk.init(dataHandler);
+        if (!initResult.isOk) {
+          console.error("Failed to initialize data SDK");
+        }
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      initializeApp();
+    });
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a9b3d88b5f0cbcd',t:'MTc2NTAxODQxNi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
