@@ -1,0 +1,195 @@
+:root {
+  --primary-bg: #1a1a2e;
+  --accent: #e94560;
+  --highlight: #0f3460;
+  --card-bg: #16213e;
+  --text-light: #f0f0f0;
+  --gradient: linear-gradient(90deg, #e94560 0%, #0f3460 100%);
+}
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Montserrat', Arial, sans-serif;
+  background: var(--primary-bg);
+  color: var(--text-light);
+  transition: background 0.7s;
+}
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--gradient);
+  padding: 1.2rem 2.5rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.13);
+}
+.logo {
+  font-size: 2rem;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+nav ul {
+  display: flex;
+  gap: 2rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+nav a {
+  color: var(--text-light);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  transition: background 0.3s, color 0.3s;
+  border-radius: 8px;
+}
+nav a:hover,
+nav a.active {
+  background: var(--highlight);
+  color: var(--accent);
+}
+.auth-btns {
+  display: flex;
+  gap: 1rem;
+}
+.login-btn, .signup-btn {
+  font-weight: 600;
+  color: var(--text-light);
+  background: var(--accent);
+  border: none;
+  border-radius: 8px;
+  padding: 0.6rem 1.2rem;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(233,69,96,0.15);
+  transition: background 0.25s, transform 0.25s;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+}
+.signup-btn {
+  background: var(--highlight);
+}
+.login-btn:hover, .signup-btn:hover {
+  background: #fff;
+  color: var(--accent);
+  transform: scale(1.05);
+}
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background: var(--card-bg);
+  margin-top: 3rem;
+  padding: 4rem 2rem 2rem 2rem;
+  border-radius: 14px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.11);
+  animation: fadeUp 1s;
+}
+.hero h1 {
+  font-size: 2.5rem;
+  color: var(--accent);
+  margin-bottom: 1rem;
+  text-shadow: 0 2px 8px #1a1a2e80;
+}
+.hero p {
+  font-size: 1.2rem;
+  max-width: 600px;
+}
+.services {
+  margin: 4rem 0 3rem 0;
+  padding: 2rem 0;
+  background: var(--highlight);
+  border-radius: 14px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.09);
+  animation: fadeUp 1.2s;
+}
+.section-title {
+  text-align: center;
+  font-size: 2rem;
+  color: var(--accent);
+  margin-bottom: 2.5rem;
+}
+.service-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+}
+.service-card {
+  background: var(--card-bg);
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.09);
+  padding: 2rem 2rem 1.5rem 2rem;
+  flex: 1 0 220px;
+  max-width: 280px;
+  min-width: 200px;
+  transition: transform 0.4s, box-shadow 0.4s;
+  cursor: pointer;
+  border: 2px solid transparent;
+  position: relative;
+  color: var(--text-light);
+}
+.service-card:hover {
+  transform: translateY(-12px) scale(1.05);
+  box-shadow: 0 8px 24px var(--accent), 0 1px 9px var(--highlight);
+  border-color: var(--accent);
+}
+.service-card h3 {
+  font-size: 1.3rem;
+  margin-bottom: 0.8rem;
+  color: var(--accent);
+  text-shadow: 0 1px 5px #e9456070;
+}
+.service-card.food { border-left: 5px solid #e94560; }
+.service-card.tailoring { border-left: 5px solid #03dac6; }
+.service-card.tutoring { border-left: 5px solid #ffd700; }
+.service-card.beauty { border-left: 5px solid #f763c6; }
+.service-card.arts { border-left: 5px solid #43e97b; }
+.ai-section {
+  margin: 4rem 0 2rem 0;
+  padding: 2rem 0;
+  background: var(--card-bg);
+  border-radius: 14px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  animation: fadeUp 1.5s;
+  text-align: center;
+}
+@keyframes fadeUp {
+  from {opacity: 0; transform: translateY(40px);}
+  to {opacity: 1; transform: translateY(0);}
+}
+@media (max-width: 900px) {
+  .service-list {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+  header, .hero, .services, .ai-section {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+.user-card {
+  border-radius: 6px;
+  background: #283d71;
+  color: #ffd700;
+  padding: 0.6rem 1rem;
+  margin: 0.4rem 0;
+  font-size: 0.98rem;
+  box-shadow: 0 2px 8px #e9456020;
+}
+.user-card strong {
+  color: #e94560;
+  font-size: 1.03em;
+}
+.user-location {
+  color: #f0f0f0;
+  font-size: 0.88em;
+  margin-top: 4px;
+  font-style: italic;
+  display: block;
+}
